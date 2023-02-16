@@ -7,7 +7,26 @@
 
 
 
-
+	<select id="getUserAccount" resultType="com.mira.basicBoard.vo.User" parameterType="String">
+		select * 
+			from USER
+			where USERID = #{userId}	
+	</select>
+	
+	<insert id="enrollProcess" parameterType="com.mira.basicBoard.vo.User">
+		insert 
+			into USER(
+						USERID, USERPWD, USERNAME, ROLE
+						)
+				values(
+						#{userId}, #{userPwd}, #{userName}, #{role}
+					)
+					
+			
+	
+	
+	
+	</insert>
 
 
 
