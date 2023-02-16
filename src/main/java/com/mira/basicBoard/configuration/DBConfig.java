@@ -2,17 +2,16 @@ package com.mira.basicBoard.configuration;
 
 import javax.sql.DataSource;
 
-import org.apache.catalina.core.ApplicationContext;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -35,8 +34,6 @@ public class DBConfig {
 	@Bean
 	public DataSource dataSource() {
 		DataSource dataSource = new HikariDataSource(hikariConfig());
-		System.out.println(dataSource.toString());
-		//hikari-Pool-1 -> 성공
 		return dataSource;
 	}
 	
@@ -45,10 +42,9 @@ public class DBConfig {
 	public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
 		SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
 		
-		
 		factoryBean.setDataSource(dataSource);
-		factoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:/mapper/*Mapper.xml"));
-		factoryBean.setTypeAliasesPackage("com.mira.basocBoard.vo");
+		factoryBean.setMapperLocations(applicationContext.getResources("classpath:/mapper/*Mapper.xml"));
+		factoryBean.setTypeAliasesPackage("com.mira.basicBoard.vo");
 		return factoryBean.getObject();
 	
 	}

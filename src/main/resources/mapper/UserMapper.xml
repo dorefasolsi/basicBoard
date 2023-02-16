@@ -3,9 +3,7 @@
 //EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 
-<mapper namespace="com.mira.basicBoard.mapper.BoardMapper">
-
-
+<mapper namespace="com.mira.basicBoard.mapper.UserMapper">
 
 
 
