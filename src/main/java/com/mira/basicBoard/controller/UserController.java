@@ -11,16 +11,23 @@ import com.mira.basicBoard.vo.User;
 public class UserController {
 
 	
-	@GetMapping("/")
-	public ModelAndView loginPageReturn(ModelAndView mv) {
+//	@GetMapping("/")
+//	public ModelAndView loginPageReturn(ModelAndView mv) {
+//		System.out.println("gg");
+//		return mv;
+//	}
+	
+	@GetMapping("/login")
+	public ModelAndView login(ModelAndView mv, User user) {
 		mv.setViewName("/user/loginPage");
+//		mv.setViewName("/board/loginSuccess");
+		
 		return mv;
 	}
 	
-	@PostMapping("/login")
-	public ModelAndView login(ModelAndView mv, User user) {
-		
-		mv.setViewName("/board/loginSuccess");
+	@PostMapping("/login/process")
+	public ModelAndView loginProcess(ModelAndView mv, User user) {
+		System.out.println(user);
 		
 		return mv;
 	}
@@ -28,6 +35,12 @@ public class UserController {
 	@GetMapping("/login/fail")
 	public ModelAndView loginFailReturn(ModelAndView mv) {
 		mv.setViewName("/user/loginPage");
+		return mv;
+	}
+	
+	@GetMapping("/login/success")
+	public ModelAndView loginSuccessReturn(ModelAndView mv) {
+		mv.setViewName("/board/loginSuccess");
 		return mv;
 	}
 }
