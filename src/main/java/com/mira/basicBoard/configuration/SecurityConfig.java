@@ -32,8 +32,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     	http	.csrf().disable();
         http
         		.authorizeRequests()
-        			.antMatchers("/", "/login/**", "/enroll/**", "/board/**").permitAll();// 시큐리티 처리에 HttpServletRequest를 이용
-//        			.anyRequest().authenticated(); // 모든 요청에 인증 필요
+        			.antMatchers("/", "/login/**", "/enroll/**").permitAll()// 시큐리티 처리에 HttpServletRequest를 이용
+        			.antMatchers("/board/**").hasAnyRole("USER")
+        			.anyRequest().hasAnyRole("USER");
+       //        			.anyRequest().authenticated(); // 모든 요청에 인증 필요
         
         http
         		.formLogin()
@@ -47,11 +49,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 						@Override
 						public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 								Authentication authentication) throws IOException, ServletException {
-	                        System.out.println("authentication : " + authentication.getName());
-	                        System.out.println("getAuthorities : " + authentication.getAuthorities());
-	                        System.out.println("getCredentials : " + authentication.getCredentials());
-	                        System.out.println("getDetails : " + authentication.getDetails());
-	                        System.out.println("getClass : " + authentication.getClass());
+//	                        System.out.println("authentication : " + authentication.getName());
+//	                        System.out.println("getAuthorities : " + authentication.getAuthorities());
+//	                        System.out.println("getCredentials : " + authentication.getCredentials());
+//	                        System.out.println("getDetails : " + authentication.getDetails());
+//	                        System.out.println("getClass : " + authentication.getClass());
 	                        response.sendRedirect("/board/list");
 						}
 	        		})
@@ -59,11 +61,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 						@Override
 						public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 								AuthenticationException exception) throws IOException, ServletException {
-	                        System.out.println("getMessage : " + exception.getMessage());
-	                        System.out.println("getCause : " + exception.getCause());
-	                        System.out.println("getStackTrace : " + exception.getStackTrace());
-	                        System.out.println("getLocalizedMessage : " + exception.getLocalizedMessage());
-	                        System.out.println("getSuppressed : " + exception.getSuppressed());
+//	                        System.out.println("getMessage : " + exception.getMessage());
+//	                        System.out.println("getCause : " + exception.getCause());
+//	                        System.out.println("getStackTrace : " + exception.getStackTrace());
+//	                        System.out.println("getLocalizedMessage : " + exception.getLocalizedMessage());
+//	                        System.out.println("getSuppressed : " + exception.getSuppressed());
 	                        response.sendRedirect("/login/fail");
 						}
 	        		})

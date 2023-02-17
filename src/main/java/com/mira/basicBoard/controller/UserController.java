@@ -65,7 +65,7 @@ public class UserController {
 	public ModelAndView enrollProcess(ModelAndView mv, User user) {
 		
 		userService.enrollProcess(user);
-		mv.setViewName("/user/enrollPage");
+		mv.setViewName("/");
 		
 		return mv;
 	}

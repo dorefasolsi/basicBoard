@@ -46,6 +46,8 @@
 	  		<div class="d-flex flex-row-reverse" id="userInfo_div">
 				<div class="p-2"><a href="/logout" id="logout_a">로그아웃</a></div>
 				<div class="p-2">
+				
+ 				<input type="text" id="user_name" class="" th:value="${#authentication.name}+'님 안녕하세요'"> 
 <!-- 				<input type="text" id="user_name" class="" th:value="${session.loginUser.userName}+'님 안녕하세요'"> -->
 				<!-- <input type="text" id="user_name" class="" th:value="${#session.getUserName}+'님 안녕하세요'"> -->
 				</div>
