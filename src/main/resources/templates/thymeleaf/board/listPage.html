@@ -55,7 +55,7 @@
 	<div class="container" id="b_container">
         <h2>자유게시판</h2>
         <div class="d-flex flex-row-reverse">
-        	<div class="p-2 bg-dark text-white" id="w_btn"><a href="/boardWritePage">글쓰기</a></div>
+        	<div class="p-2 bg-dark text-white" id="w_btn"><a href="/board/write">글쓰기</a></div>
         </div>
 		<table class="table" id="boardTable">
 			<thead class="thead-dark">
@@ -67,12 +67,12 @@
 	            </tr>
           	</thead>
           	<tbody>
-<!-- 	            <tr th:each="list : ${blist}">
+ 	            <tr th:each="list : ${boardList}">
 		              <td th:text="${list.boardNo}" class="boardNo"></td>
 		              <td th:text="${list.boardTitle}"></td>
 		              <td th:text="${list.createDate}"></td>
 		              <td th:text="${list.userId}"></td>
-	            </tr> -->
+	            </tr> 
           	</tbody>
         
         </table>
@@ -82,7 +82,7 @@
 	<script>
 		$(function(){
 			$("#boardTable>tbody>tr").click(function(){
-				location.href = '/board/detail?boardNo=' + $(this).children(".boardNo").text();
+				location.href = '/board/' + $(this).children(".boardNo").text();
 				
 			})
 		})

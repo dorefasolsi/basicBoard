@@ -2,13 +2,66 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0
 //EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-
 <mapper namespace="com.mira.basicBoard.mapper.BoardMapper">
+	<resultMap id="BoardResultSet" type="Board">	
+		<result column="boardNo" property="boardNo" />
+		<result column="boardTitle" property="boardTitle" />
+		<result column="boardContent" property="boardContent" />
+		<result column="createDate" property="createDate" />
+		<result column="userId" property="userId" />
+		<result column="viewCount" property="viewCount" />
+	</resultMap>
+
+	<!-- 게시글 전체 조회 -->
+	<select id="boardList" resultMap="BoardResultSet">
+
+ 		select * 
+			from BOARD
+			order by boardNo desc;
+
+	</select>
+	
+	<insert id="boardWrite" parameterType="board">
+	
+		insert 
+			into BOARD(
+						BOARDTITLE
+						, BOARDCONTENT
+						, USERID
+						)
+				values(
+						#{boardTitle}
+						, #{boardContent}
+						, #{userId}
+				
+						);	
+	</insert>
+	
+	
+	<select id="boardDetail" resultMap="BoardResultSet" parameterType="int">
+		select *
+			from BOARD
+			where BOARDNO = #{boardNo}; 
+	</select>
+	
+	
+	<delete id="boardDelete" parameterType="int">
+		delete 
+			from BOARD
+			where BOARDNO = #{boardNo};
+	</delete>
 
 
-
-
-
+	<update id="boardUpdate" parameterType="board">
+		update BOARD
+			set
+				BOARDTITLE = #{boardTitle}
+				, BOARDCONTENT = #{boardContent}
+			where 
+				BOARDNO = #{boardNo};
+	
+	
+	</update>
 
 
 

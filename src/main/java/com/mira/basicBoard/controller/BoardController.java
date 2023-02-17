@@ -1,29 +1,97 @@
 package com.mira.basicBoard.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mira.basicBoard.service.BoardService;
+import com.mira.basicBoard.vo.Board;
 import com.mira.basicBoard.vo.User;
 
 @RestController
 public class BoardController {
 	
+	@Autowired
+	private BoardService boardService;
 	
 	@GetMapping("/board/list")
-	public ModelAndView loginSuccessReturn(@AuthenticationPrincipal User user, ModelAndView mv, User loginUser, Principal principal, Authentication authentication) {
+	public ModelAndView loginSuccessReturn(@AuthenticationPrincipal User user, ModelAndView mv, Principal principal, Authentication authentication) {
 	    
-	    
-		
-		
-		mv.setViewName("/board/boardListView");
+		ArrayList<Board> boardList = boardService.boardList();
+		mv.addObject("boardList", boardList);
+		mv.setViewName("/board/listPage");
 		return mv;
 	}
+	
+	@GetMapping("/board/write")
+	public ModelAndView boardWritePage(@AuthenticationPrincipal User user, ModelAndView mv) {
+		
+		
+		mv.setViewName("/board/writePage");
+		return mv;
+	}
+	
+	@PostMapping("/board/write")
+	public ModelAndView boardWrite(@AuthenticationPrincipal User user, ModelAndView mv, Board board) {
+		board.setUserId(user.getUserId());
+		int result = boardService.boardWrite(board);
+		mv.setViewName("redirect:/board/list");
+		return mv;
+	}
+	
+	@GetMapping("/board/{boardNo}")
+	public ModelAndView boardDetail(@PathVariable("boardNo") int boardNo, ModelAndView mv) {
+		
+		Board detailBoard = boardService.boardDetail(boardNo);
+		
+		mv.addObject("detailBoard", detailBoard);
+		
+		mv.setViewName("/board/detailPage");
+		return mv;
+	}
+	
+	
+	@DeleteMapping("/board/{boardNo}")
+	public ModelAndView boardDelete(@PathVariable("boardNo") int boardNo, ModelAndView mv) {
+		
+		int result = boardService.boardDelete(boardNo);
+		System.out.println(result);
+		mv.setViewName("redirect:/board/list");
+		return mv;
+	}
+	
+	
+	@GetMapping("/board/update/{boardNo}")
+	public ModelAndView boardUpdatePage(@PathVariable("boardNo") int boardNo, ModelAndView mv) {
+	
+		Board detailBoard = boardService.boardDetail(boardNo);
+		mv.addObject("detailBoard", detailBoard);
+		mv.setViewName("/board/updatePage");
+		return mv;
+	}
+	
+	@PutMapping("/board/update")	
+	public ModelAndView boardUpdate(ModelAndView mv, Board board) {
+		
+		
+		int result = boardService.boardUpdate(board);
+		mv.setViewName("redirect:/board/list");
+		
+		return mv;
+	}
+	
+	
+	
 	
 	
 	

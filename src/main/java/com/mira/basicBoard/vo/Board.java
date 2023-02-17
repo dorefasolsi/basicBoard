@@ -15,4 +15,5 @@ public class Board {
 	private String boardContent;
 	private Date createDate;
 	private String userId;
+	private int viewCount;
 }
