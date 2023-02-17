@@ -24,30 +24,30 @@ public class UserController {
 	}
 	
 	
-	/*
-	 * @PostMapping("/login/process") public ModelAndView loginProcess(ModelAndView
-	 * mv, User user) {
-	 * 
-	 * 
-	 * mv.setViewName("/board/loginSuccess"); return mv; }
-	 */
-	
-	@GetMapping("/login/process")
-	public ModelAndView loginSuccessReturn(ModelAndView mv, Authentication authentication) {
-		System.out.println("dd");
-		User user = (User)authentication.getPrincipal();
-		
-		mv.addObject("user", user);
-		
-		System.out.println(user);
-		mv.setViewName("/board/loginSuccess");
-		return mv;
-	}
+//	@PostMapping("/login/process")
+//	public ModelAndView loginSuccessReturn(ModelAndView mv, Authentication authentication) {
+//		System.out.println("dd");
+//		System.out.println((User)authentication.getPrincipal());
+//		User user = (User)authentication.getPrincipal();
+//		
+//		System.out.println(user);
+//		mv.addObject("user", user);
+//		
+//		System.out.println(user);
+//		mv.setViewName("/board/loginSuccess");
+//		return mv;
+//	}
 	
 	
 	@GetMapping("/login/fail")
-	public ModelAndView loginFailReturn(ModelAndView mv) {
-		mv.setViewName("/user/loginPage");
+	public ModelAndView loginFailReturn(ModelAndView mv, User user) {
+		mv.setViewName("/user/loginFail");
+		return mv;
+	}
+	
+	@GetMapping("/login/success")
+	public ModelAndView loginSuccessReturn(ModelAndView mv, User user) {
+		mv.setViewName("/board/loginSuccess");
 		return mv;
 	}
 	
