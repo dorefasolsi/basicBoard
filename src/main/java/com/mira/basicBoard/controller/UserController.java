@@ -41,15 +41,17 @@ public class UserController {
 	
 	@GetMapping("/login/fail")
 	public ModelAndView loginFailReturn(ModelAndView mv, User user) {
+		
+		
 		mv.setViewName("/user/loginFail");
 		return mv;
 	}
 	
-	@GetMapping("/login/success")
-	public ModelAndView loginSuccessReturn(ModelAndView mv, User user) {
-		mv.setViewName("/board/loginSuccess");
-		return mv;
-	}
+//	@GetMapping("/login/success")
+//	public ModelAndView loginSuccessReturn(ModelAndView mv, User user) {
+//		mv.setViewName("/board/loginSuccess");
+//		return mv;
+//	}
 	
 	
 	@GetMapping("/enroll/page")
