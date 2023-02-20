@@ -88,6 +88,17 @@
 		})
 	</script>
 	
+	<script th:javascript>
+/* ![CDATA[ */
+function movePage(uri, queryString) {
+    console.log(uri);
+    console.log(queryString);
+
+    location.href = uri + queryString;
+}
+/* ]]*/
+</script>
+	
       
             
 </body>
