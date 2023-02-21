@@ -2,6 +2,7 @@ package com.mira.basicBoard.repository;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -16,13 +17,19 @@ public class BoardRepository {
 	private BoardMapper boardMapper;
 	
 	
-	public ArrayList<Board> boardList(PageInfo pageInfo) {
+	public ArrayList<Board> boardList(PageInfo pi) {
+
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
 		
-		return boardMapper.boardList(pageInfo);
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return boardMapper.boardList(rowBounds);
+		
+		
 	}
 
-	public int boardListCount(PageInfo pi) {
-		return boardMapper.boardListCount(pi);
+	public int boardListCount() {
+		return boardMapper.boardListCount();
 	}
 
 	public int boardWrite(Board board) {

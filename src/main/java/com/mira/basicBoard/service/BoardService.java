@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.mira.basicBoard.repository.BoardRepository;
 import com.mira.basicBoard.vo.Board;
+import com.mira.basicBoard.vo.Criteria;
 import com.mira.basicBoard.vo.PageInfo;
 
 @Service
@@ -16,12 +17,12 @@ public class BoardService {
 	private BoardRepository boardRepository;
 	
 	
-	public ArrayList<Board> boardList(PageInfo pageInfo) {
-		return boardRepository.boardList(pageInfo);
+	public ArrayList<Board> boardList(PageInfo pi) {
+		return boardRepository.boardList(pi);
 	}
 
-	public int boardListCount(PageInfo pi) {
-		return boardRepository.boardListCount(pi);
+	public int boardListCount() {
+		return boardRepository.boardListCount();
 	}
 
 	public int boardWrite(Board board) {

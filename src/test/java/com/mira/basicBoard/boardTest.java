@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.mira.basicBoard.mapper.BoardMapper;
-import com.mira.basicBoard.vo.PageInfo;
+import com.mira.basicBoard.vo.Criteria;
 
 
 @SpringBootTest
@@ -16,7 +16,7 @@ public class boardTest {
 	
 	@Test
 	public void testPage() {
-		PageInfo pi = new PageInfo();
+		Criteria pi = new Criteria();
 		
 	}
 }

@@ -13,18 +13,20 @@
 	</resultMap>
 
 	<!-- 게시글 전체 조회 -->
-	<select id="boardList" resultMap="BoardResultSet" parameterType="com.mira.basicBoard.vo.PageInfo">
+	<select id="boardList" resultMap="BoardResultSet">
 
  		select * 
 			from BOARD
 			order by boardNo desc
-			limit ${offset}, #{recordSize}
+			
 
 	</select>
 	
-	<select id="boardGetToatl" resultType ="int" parameterType="com.mira.basicBoard.vo.PageInfo">
+	<select id="boardListCount" resultType="int"> 
+	
 		select COUNT(*)
 			from BOARD;
+	
 	</select>
 	
 	<insert id="boardWrite" parameterType="board">
@@ -69,12 +71,7 @@
 	
 	</update>
 
-	<select id="boardListCount" resultType="int"> 
-	
-		select COUNT(*)
-			from BOARD;
-	
-	</select>
+
 
 
 

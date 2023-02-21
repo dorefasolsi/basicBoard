@@ -9,12 +9,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mira.basicBoard.service.BoardService;
+import com.mira.basicBoard.template.Pagination;
 import com.mira.basicBoard.vo.Board;
-import com.mira.basicBoard.vo.Page;
 import com.mira.basicBoard.vo.PageInfo;
 import com.mira.basicBoard.vo.User;
 
@@ -25,26 +26,17 @@ public class BoardController {
 	private BoardService boardService;
 	
 	@GetMapping("/board/list")
-	public ModelAndView loginSuccessReturn(PageInfo pi, ModelAndView mv) {
+	public ModelAndView loginSuccessReturn(@RequestParam(value="currentPage", defaultValue="1")int currentPage, ModelAndView mv) {
 	     
-		
+		int listCount = boardService.boardListCount();
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
 		ArrayList<Board> boardList = boardService.boardList(pi);
-		mv.addObject("boardList", boardList);
-
-		//페이지 이동 인터페이스 데이터
-//		int total = boardService.boardListCount(pi);s
-		
-//		Page pageMaker = new Page(pi, total);
-		
-
-//		mv.addObject("pageMaker", pageMaker);
-		
+		mv.addObject("boardList", boardList).addObject("pi", pi);		
 		mv.setViewName("/board/listPage");
 		return mv;
 	}
-	
-	
-	
+
+
 	@GetMapping("/board/write")
 	public ModelAndView boardWritePage(@AuthenticationPrincipal User user, ModelAndView mv) {
 		
