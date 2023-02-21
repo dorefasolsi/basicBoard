@@ -32,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     	http	.csrf().disable();
         http
         		.authorizeRequests()
-        			.antMatchers("/", "/login/**", "/enroll/**").permitAll()// 시큐리티 처리에 HttpServletRequest를 이용
+        			.antMatchers("/", "/login/**", "/enroll/**", "/board/{boardNo}").permitAll()// 시큐리티 처리에 HttpServletRequest를 이용
         			.antMatchers("/board/**").hasAnyRole("USER")
         			.anyRequest().hasAnyRole("USER");
        //        			.anyRequest().authenticated(); // 모든 요청에 인증 필요

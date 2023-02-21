@@ -37,7 +37,6 @@ public class UserService implements UserDetailsService{
 	public void enrollProcess(User user) {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		user.setUserPwd(passwordEncoder.encode(user.getUserPwd()));
-		System.out.println(user.getUserPwd());
 		user.setRole("ROLE_USER");
 		
 		userMapper.enrollProcess(user);

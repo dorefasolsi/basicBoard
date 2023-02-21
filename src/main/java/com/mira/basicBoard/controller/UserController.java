@@ -18,16 +18,11 @@ public class UserController {
 	private UserService userService;
 
 	
-	@GetMapping("/")
-	public ModelAndView loginPageReturn(@AuthenticationPrincipal User user, ModelAndView mv) {
-		System.out.println(user);
-
+	@GetMapping("/login/page")
+	public ModelAndView loginPage(ModelAndView mv) {
 		mv.setViewName("/user/loginPage");
-		 
 		return mv;
 	}
-	
-	
 	
 	@GetMapping("/login/fail")
 	public ModelAndView loginFailReturn(ModelAndView mv, User user) {
