@@ -2,6 +2,7 @@ package com.mira.basicBoard.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,8 +19,11 @@ public class UserController {
 
 	
 	@GetMapping("/")
-	public ModelAndView loginPageReturn(ModelAndView mv) {
+	public ModelAndView loginPageReturn(@AuthenticationPrincipal User user, ModelAndView mv) {
+		System.out.println(user);
+
 		mv.setViewName("/user/loginPage");
+		 
 		return mv;
 	}
 	

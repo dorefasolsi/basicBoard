@@ -72,12 +72,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	        		.permitAll()
 	        		;
         
-        http
-        		.sessionManagement() //세션관리기능
-        		.maximumSessions(1) //최대 허용 세션 수
-        		.maxSessionsPreventsLogin(false) //동시로그인차단(현재세션만료) 
-        										//false : 기존세션만료
-        		.expiredUrl("/expired"); // 세션 만료 시 이동할 페이지
+//        http
+//        		.sessionManagement() //세션관리기능
+//        		.maximumSessions(1) //최대 허용 세션 수
+//        		.maxSessionsPreventsLogin(false) //동시로그인차단(현재세션만료) 
+//        										//false : 기존세션만료
+//        		.expiredUrl("/expired"); // 세션 만료 시 이동할 페이지
         		
         		// 세션 만료 시 이동할 url
         		

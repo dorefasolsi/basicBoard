@@ -69,7 +69,6 @@ public class BoardController {
 	public ModelAndView boardDelete(@PathVariable("boardNo") int boardNo, ModelAndView mv) {
 		
 		int result = boardService.boardDelete(boardNo);
-		System.out.println(result);
 		mv.setViewName("redirect:/board/list");
 		return mv;
 	}
