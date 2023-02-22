@@ -26,7 +26,6 @@ public class BoardController {
 	private BoardService boardService;
 	
 	
-	//합쳐도 디ㅗㄹ것같음~~~~~~ th:if 작성완료되면 합치기~~~
 	@GetMapping({"/", "/board/list"})
 	public ModelAndView mainPage(@RequestParam(value="currentPage", defaultValue="1")int currentPage, ModelAndView mv) {
 		
@@ -38,18 +37,6 @@ public class BoardController {
 		return mv;
 	}
 	
-	
-//	@GetMapping("/board/list")
-//	public ModelAndView loginSuccessReturn(@RequestParam(value="currentPage", defaultValue="1")int currentPage, ModelAndView mv) {
-//	     
-//		int listCount = boardService.boardListCount();
-//		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
-//		ArrayList<Board> boardList = boardService.boardList(pi);
-//		mv.addObject("boardList", boardList).addObject("pi", pi);		
-//		mv.setViewName("/board/listPage");
-//		return mv;
-//	}
-
 
 	@GetMapping("/board/write")
 	public ModelAndView boardWritePage(@AuthenticationPrincipal User user, ModelAndView mv) {
