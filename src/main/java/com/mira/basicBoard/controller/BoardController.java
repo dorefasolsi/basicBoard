@@ -19,6 +19,9 @@ import com.mira.basicBoard.vo.Board;
 import com.mira.basicBoard.vo.PageInfo;
 import com.mira.basicBoard.vo.User;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 public class BoardController {
 	
@@ -30,6 +33,7 @@ public class BoardController {
 	public ModelAndView mainPage(@RequestParam(value="currentPage", defaultValue="1")int currentPage, ModelAndView mv) {
 		
 		int listCount = boardService.boardListCount();
+		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
 		ArrayList<Board> boardList = boardService.boardList(pi);
 		mv.addObject("boardList", boardList).addObject("pi", pi);		

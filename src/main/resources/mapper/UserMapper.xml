@@ -22,11 +22,11 @@
 						#{userId}, #{userPwd}, #{userName}, #{role}
 					)
 					
-			
-	
-	
-	
 	</insert>
+	
+	<select id="enrollValidate" resultType="_int" parameterType="string">
+		select count(*) from user where userId = #{userId}
+	</select>
 
 
 

@@ -1,16 +1,18 @@
 package com.mira.basicBoard.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mira.basicBoard.service.UserService;
 import com.mira.basicBoard.vo.User;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 public class UserController {
 	
@@ -31,8 +33,7 @@ public class UserController {
 		mv.setViewName("/user/loginFail");
 		return mv;
 	}
-		
-	
+
 	@GetMapping("/enroll/page")
 	public ModelAndView enrollPageReturn(ModelAndView mv) {
 		mv.setViewName("/user/enrollPage");
@@ -47,7 +48,16 @@ public class UserController {
 		mv.setViewName("/user/loginPage");
 		
 		return mv;
+
 	}
+	
+	@PostMapping("/enroll/validate")
+    public String validateUserId(@RequestParam("userId") String userId) {
+		
+		int result = userService.enrollValidate(userId);
+		log.debug(Integer.toString(result));
+        return "success";
+    }
 	
 	
 }

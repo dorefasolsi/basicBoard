@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mira.basicBoard.mapper.UserMapper;
+import com.mira.basicBoard.repository.UserRepository;
 import com.mira.basicBoard.vo.User;
 
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,8 @@ public class UserService implements UserDetailsService{
 	
 	@Autowired
 	private UserMapper userMapper;
+	@Autowired
+	private UserRepository userRepository;
 	
 	@Override
 	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
@@ -41,12 +44,11 @@ public class UserService implements UserDetailsService{
 		
 		userMapper.enrollProcess(user);
 	}
-	
-	
-	
-	
-	
-	
+
+
+	public int enrollValidate(String userId) {
+		return userRepository.enrollValidate(userId);
+	}
 	
 	
 }

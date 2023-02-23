@@ -12,5 +12,7 @@ public interface UserMapper {
 	public User getUserAccount(String userId);
 
 	public void enrollProcess(User user);
+
+	public int enrollValidate(String userId);
 	
 }
