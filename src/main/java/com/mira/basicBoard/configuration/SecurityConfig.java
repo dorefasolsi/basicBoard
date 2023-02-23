@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
@@ -26,13 +27,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Autowired
 	UserService userService;
 	
+	@Override
+    public void configure(WebSecurity web) throws Exception {
+        // resources 모든 접근을 허용하는 설정을 해버리면
+        // HttpSecurity 설정한 ADIM권한을 가진 사용자만 resources 접근가능한 설정을 무시해버린다.
+        web.ignoring()
+                .antMatchers("/resources/**");
+    }
 	
     @Override
     protected void configure(HttpSecurity http) throws Exception {
     	http	.csrf().disable();
         http
         		.authorizeRequests()
-        			.antMatchers("/", "/login/**", "/enroll/**", "/board/{boardNo}").permitAll()// 시큐리티 처리에 HttpServletRequest를 이용
+        			.antMatchers("/", "/login/**", "/enroll/**", "/board/{boardNo}", "/css/**", "/javaScript/**").permitAll()// 시큐리티 처리에 HttpServletRequest를 이용
         			.antMatchers("/board/**").hasAnyRole("USER")
         			.anyRequest().hasAnyRole("USER");
        //        			.anyRequest().authenticated(); // 모든 요청에 인증 필요

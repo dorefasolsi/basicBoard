@@ -1,0 +1,87 @@
+@charset "utf-8";
+
+
+div{
+	border : 1px solid red;
+}
+
+/* enroll */
+#b_container{
+    padding-top: 120px;
+    padding-bottom : 10px;
+}
+#enroll_a{
+    color:white;
+    text-decoration: none;
+}
+
+/* detailPage */
+.b_title{
+    width: 100px;
+    text-align: center;
+}
+
+.b_context{
+    width: 950px;
+    border:none;
+    outline:none;
+}
+#detail_context{
+    outline:none;
+    resize:none;
+}
+#detail_a{
+    color:black;
+    text-decoration: none;
+}
+
+/* header */
+#userInfo_div{
+    padding-top: 15px;
+}
+
+#logout_a, #login_a{
+    text-decoration : none;
+    color : black;
+}
+#logout_a, #login_a hover{
+    text-decoration : none;
+    color : black;
+}
+#header-username{
+    border: none;
+    outline:none;
+}
+#header-username:hover{
+    border:none;
+}
+
+/* listPage */
+#write_btn{
+    margin-bottom: 5px;
+}
+#write_btn a{
+	text-decoration : none;
+	color : white;
+}
+#boardTable tbody tr:hover{
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* update */
+#update_a{
+    color:black;
+    text-decoration: none;
+}
+
+/* write */
+.write_input{
+    width: 950px;
+    resize : none;
+}
+
+#write_a{
+    color:black;
+    text-decoration: none;
+}

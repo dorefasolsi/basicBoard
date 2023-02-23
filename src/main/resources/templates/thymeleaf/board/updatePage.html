@@ -12,22 +12,8 @@
     <!-- alertify js -->
   	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
     
-    <style>
-        #b_container{
-            padding-top: 150px;
-        }
-        .b_title{
-            width: 100px;
-            text-align: center;
-        }
-        .b_context{
-            width: 950px;
-        }
-		#update_a{
-            color:black;
-            text-decoration: none;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+	<script type="text/javascript" th:src="@{/javaScript/script.js}"></script>
     <title>게시글 수정</title>
 </head>
 <body>
@@ -43,11 +29,11 @@
                 	</tr>
                     <tr>
                       <td class="b_title">제목</td>
-                      <td><input type="text" class="b_context" name="boardTitle" th:value="*{boardTitle}"></td>
+                      <td><input type="text" class="write_input" name="boardTitle" th:value="*{boardTitle}"></td>
                     </tr>
                     <tr>
                       <td class="b_title">내용</td>
-                      <td><textarea class="b_context" name="boardContent" id="boardContent" cols="30" rows="10" th:text="*{boardContent}"></textarea></td>
+                      <td><textarea class="write_input" name="boardContent" id="boardContent" cols="30" rows="10" th:text="*{boardContent}"></textarea></td>
                     </tr>
                 </table>
                     

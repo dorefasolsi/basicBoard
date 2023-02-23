@@ -10,42 +10,8 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-    <style>
-        #b_container{
-            padding-top: 150px;
-        }
-        #userInfo_div{
-        	padding-top: 30px;
-        }
-        #w_btn{
-            margin-bottom: 5px;
-        }
-        #boardTable tbody tr:hover{
-            font-weight: bold;
-            cursor: pointer;
-        }
-        a {
-        	text-decoration : none;
-        	color : white;
-        }
-        a:hover {
-        	text-decoration : none;
-        	color : white;
-        }
-        #user_name{
-            border: none;
-            outline:none;
-        }
-        #user name:hover{
-        	border:none;
-        }
-        #logout_a{
-        	color:black;
-        }
-        #login_a{
-        	color:black;
-        }
-    </style>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+	<script type="text/javascript" th:src="@{/javaScript/script.js}"></script>
     <title>게시판</title>
 </head>
 <body>
@@ -59,7 +25,7 @@
         <h2>자유게시판</h2>
         <div class="d-flex flex-row-reverse">
 			<th:block th:if="${#authentication.name != null and #authentication.name != 'anonymousUser'}">
-			  <div class="p-2 bg-dark text-white" id="w_btn">
+			  <div class="p-2 bg-dark text-white" id="write_btn">
 			    <a href="/board/write" th:attr="disabled=${true} ? '' : 'disabled'">글쓰기</a>
 			  </div>
 			</th:block>
@@ -112,14 +78,7 @@
 	</div>
 	
 	
-	<script>
-		$(function(){
-			$("#boardTable>tbody>tr").click(function(){
-				location.href = '/board/' + $(this).children(".boardNo").text();
-				
-			})
-		})
-	</script>
+
 
 </body>
 </html>
