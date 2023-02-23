@@ -23,23 +23,23 @@ public class boardTest {
 	
 	@Test
 	public void testEnroll() {
-		String userId = "admin";
+		String userId = "p13786873";
 		
 		int result = userMapper.enrollValidate(userId);
 		System.out.println(result);
 		
 	}
 	
-	@Test
-	public void testEnroll2() {
-		Board board = new Board();
-		board.setBoardTitle("d");
-		board.setBoardContent("dd");
-		board.setUserId("admin");
-		
-		int result = boardMapper.boardWrite(board);
-		
-		System.out.println(result);
-		
-	}
+//	@Test
+//	public void testEnroll2() {
+//		Board board = new Board();
+//		board.setBoardTitle("d");
+//		board.setBoardContent("dd");
+//		board.setUserId("admin");
+//		
+//		int result = boardMapper.boardWrite(board);
+//		
+//		System.out.println(result);
+//		
+//	}
 }

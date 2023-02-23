@@ -11,6 +11,9 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
   
+  	<!-- 제이쿼리 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  
     <style>
         #b_container{
             padding-top: 150px;
@@ -31,7 +34,7 @@
         <h2>회원가입</h2>
         <p>게시판 이용을 위해서는 회원가입이 필요합니다.</p>
 
-        <form action="/enroll/enroll" method="post" class="was-validated">
+        <form action="/enroll/enroll" method="post" class="need-validated">
             <div class="form-group">
                 <label for="userId">아이디</label>
                 <input type="text" class="form-control" id="userId" placeholder="" name="userId" required>
@@ -89,12 +92,23 @@
   	 		}
   	 		else if(regExp.test($userId)){
   	 			$('#id-feedback').val("");
+  	 			console.log("gg");
 				$.ajax({
 				   url : "/enroll/validate",
 				   data : {userId : $userId},
 				   type : "post",
-				   contentType : "application/x-www-form-urlencoded"
+				   contentType : "application/x-www-form-urlencoded",
+				   success : function(data){
+					   console.log(data);
+					   if(data.data == 0){
+						   $('#id-feedback').val("사용 가능한 아이디입니다.");
+					   } else {
+						   $('#id-feedback').val("이미 사용 중인 아이디입니다. 다시 입력하세요.");
+						   $('#userId').val("");
+					   }
+				   }
 				})
+				console.log("dd");
   	 			return true;
   	 		}
 
