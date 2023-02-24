@@ -17,48 +17,52 @@
     <title>게시글 수정</title>
 </head>
 <body>
-    <div class="container" id="b_container">
-        <form th:action="@{'/board/update'}" th:method="Put">
-            
-            <div class="container">
-                <h2>수정하기</h2>
-                <p>내용을 변경할 수 있습니다.</p>
-                <table class="table" th:object="${detailBoard}">
-                	<tr class="boardNo">
-                		<td class="boardNo"><input name="boardNo" th:value="*{boardNo}" class="boardNo"></td>
-                	</tr>
-                    <tr>
-                      <td class="b_title">제목</td>
-                      <td><input type="text" class="write_input" name="boardTitle" th:value="*{boardTitle}" maxlength="100" onchange="limitText(this, 100)"></td>
-                    </tr>
-                    <tr>
-                      <td class="b_title">내용</td>
-                      <td><textarea class="write_input" name="boardContent" id="boardContent" cols="30" rows="10" th:text="*{boardContent}" maxlength="3000" onchange="limitText(this, 3000)"></textarea></td>
-                    </tr>
-                </table>
-                    
-            </div>
-            <div class="d-flex justify-content-center mb-3">
-                <div class="p-2"><button type="submit" id="left_btn">등록하기</button></div>
-                <div class="p-2">
-                	<button type="reset">
-                		<a href="javascript:history.back();" id="update_a">취소하기</a>
-                	</button>
-                </div>
-                
-            </div>    
-            
-            
-        </form>
+	<div class="container" id="b_container">
+		<form th:action="@{'/board/update'}" th:method="Put">
+		    
+			<div class="container">
+				<h2>수정하기</h2>
+				<p>내용을 변경할 수 있습니다.</p>
+				<table class="table" th:object="${detailBoard}">
+					<tr class="update-hidden-boardNo">
+						<td class="update-hidden-boardNo">
+							<input name="boardNo" th:value="*{boardNo}" class="update-hidden-boardNo">
+						</td>
+					</tr>
+					<tr>
+						<td class="b_title">제목</td>
+						<td>
+							<input type="text" class="write_input" name="boardTitle" th:value="*{boardTitle}" 
+							maxlength="100" oninput="limitText(this, 100)">
+						</td>
+					</tr>
+					<tr>
+						<td class="b_title">내용</td>
+						<td>
+							<textarea class="write_input" name="boardContent" id="boardContent" 
+							cols="30" rows="10" th:text="*{boardContent}" 
+							maxlength="3000" oninput="limitText(this, 3000)"></textarea>
+						</td>
+					</tr>
+				</table>
+			        
+			</div>
+			<div class="d-flex justify-content-center mb-3">
+			    <div class="p-2"><button type="submit" id="left_btn">등록하기</button></div>
+			    <div class="p-2">
+			    	<button type="reset">
+			    		<a href="javascript:history.back();" id="update_a">취소하기</a>
+			    	</button>
+			    </div>
+			    
+			</div>    
+		    
+		    
+		</form>
+	
+	
+	
+	</div>
 
-
-
-    </div>
-    
-    <script>
-	    window.onload = $(function(){
-	    	$('.boardNo').hide();	    	
-	    })
-    </script>
 </body>
 </html>

@@ -1,9 +1,7 @@
 @charset "utf-8";
 
 
-div{
-	border : 1px solid red;
-}
+
 
 /* enroll */
 #b_container{
@@ -14,6 +12,13 @@ div{
     color:white;
     text-decoration: none;
 }
+
+
+.input-feedback{
+	width:100%;
+	border:none;
+}
+
 
 /* detailPage */
 .b_title{

@@ -12,9 +12,8 @@
            var $enrollUserId = $('#enrollUserId').val();
            var regExp =  /^[a-z\d]{5,20}$/;
            //영문 소문자, 숫자, 5자~20자, 문자내모든패턴검사
-           //영문자로 시작하는 영문자 또는 숫자 6~20자 
            if(!regExp.test($enrollUserId)){
-               $('#id-feedback').val("5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.");
+               $('#id-feedback').val("5~20자의 영문 소문자와 숫자만 사용 가능합니다.");
                return false;
            }
            else if(regExp.test($enrollUserId)){
@@ -45,7 +44,7 @@
           var regExp = /^[a-zA-Z\d!@#$%]{8,16}$/; //8~16자 영소문자, 대문자, 숫자, 특수문자
           
           if(!regExp.test($enrollUserPwd)){
-              $('#pwd-feedback').val("비번틀림~");
+              $('#pwd-feedback').val("올바르지 않은 비밀번호 형식입니다. 8~16자의 영어 대소문자, 숫자, 특수문자(!@#$%)만 사용하실 수 있습니다.");
               return false;
           }
           else if(regExp.test($enrollUserPwd)){
@@ -112,4 +111,9 @@
 	        inputElement.value = inputElement.value.substring(0, maxLength);
 	    }
 	}
+	
+	/*update*/
+	window.onload = $(function(){
+	   	$('.update-hidden-boardNo').hide();	    	
+	})
 		
