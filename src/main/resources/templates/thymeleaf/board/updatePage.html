@@ -29,11 +29,11 @@
                 	</tr>
                     <tr>
                       <td class="b_title">제목</td>
-                      <td><input type="text" class="write_input" name="boardTitle" th:value="*{boardTitle}"></td>
+                      <td><input type="text" class="write_input" name="boardTitle" th:value="*{boardTitle}" maxlength="100" onchange="limitText(this, 100)"></td>
                     </tr>
                     <tr>
                       <td class="b_title">내용</td>
-                      <td><textarea class="write_input" name="boardContent" id="boardContent" cols="30" rows="10" th:text="*{boardContent}"></textarea></td>
+                      <td><textarea class="write_input" name="boardContent" id="boardContent" cols="30" rows="10" th:text="*{boardContent}" maxlength="3000" onchange="limitText(this, 3000)"></textarea></td>
                     </tr>
                 </table>
                     
@@ -59,7 +59,6 @@
 	    window.onload = $(function(){
 	    	$('.boardNo').hide();	    	
 	    })
-
     </script>
 </body>
 </html>

@@ -104,3 +104,12 @@
           return;
       }
 	}
+	
+    
+	function limitText(inputElement, maxLength) {
+	    if (inputElement.value.length > maxLength) {
+	        alert(maxLength + "자 이상은 입력하실 수 없습니다.");
+	        inputElement.value = inputElement.value.substring(0, maxLength);
+	    }
+	}
+		
