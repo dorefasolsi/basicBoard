@@ -15,20 +15,42 @@
 </head>
 <body>
 	<header>
-	  <div class="d-flex flex-row-reverse" id="userInfo_div">
-	    <th:block th:if="${#authentication.name != null and #authentication.name != 'anonymousUser'}">
-	      <div class="p-2"><a href="/logout" id="logout_a">로그아웃</a></div>
-	      <div class="p-2">
-	        <input type="text" id="header-username" class="" th:value="${#authentication.name}+'님 안녕하세요'"> 
-	      </div>
-	    </th:block>
-	    <th:block th:if="${#authentication.name == 'anonymousUser' or #authentication.name == null}">
-	      <div class="p-2"><a href="/login/page" id="login_a">로그인</a></div>
-	      <div class="p-2">
-	        <input type="text" id="header-username" class="" th:value="'비회원님 안녕하세요'"> 
-	      </div>									
-	    </th:block>
-	  </div>	  		
+		<div class="d-flex" id="userInfo_div">		
+			<!-- 검색 -->
+			<form>
+				<div class="input-group mt-3 mb-3 header_searchBar">
+					<div class="input-group-prepend">
+						<button type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown">
+						카테고리
+						</button>
+						<div class="dropdown-menu">
+							<a class="dropdown-item" href="#">Link 3</a>
+						</div>		
+					</div>
+					<input type="text" class="form-control" placeholder="검색어를 입력하세요">
+					<button>검색</button>
+				</div>		
+			</form>
+
+			<!--  -->
+			<th:block th:if="${#authentication.name == 'anonymousUser' or #authentication.name == null}">
+			    <div class="p-2 header_userInfo">
+					<input type="text" id="header-username" class="" th:value="'비회원님 안녕하세요'"> 
+			    </div>									
+			    <div class="p-2 login_area"><a href="/login/page" id="login_a">로그인</a></div>
+			</th:block>
+
+			<th:block th:if="${#authentication.name != null and #authentication.name != 'anonymousUser'}">
+			    <div class="p-2 header_userInfo">
+					<input type="text" id="header-username" class="" th:value="${#authentication.name}+'님 안녕하세요'"> 
+			    </div>
+			    <div class="p-2 login_area"><a href="/logout" id="logout_a">로그아웃</a></div>
+			</th:block>
+			
+			
+			
+			
+		</div>	  		
 	</header>
 
 </body>

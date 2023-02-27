@@ -44,6 +44,10 @@ public class BoardService {
 		return boardRepository.boardUpdate(board);
 	}
 
+	public void increaseViewCount(int boardNo) {
+		boardRepository.increaseViewCount(boardNo);
+	}
+
 
 
 

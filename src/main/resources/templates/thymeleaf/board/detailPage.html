@@ -36,6 +36,10 @@
                 <td><input type="text" class="b_context" th:value="*{createDate}" readonly></td>
             </tr>
             <tr>
+                <td class="b_title">조회수</td>
+                <td><input type="text" class="b_context" th:value="*{viewCount}" readonly></td>
+            </tr>
+            <tr>
                 <td class="b_title">내용</td>
                 <td><textarea class="b_context" id="detail_context" cols="30" rows="10" th:text="*{boardContent}" readonly></textarea></td>
             </tr>

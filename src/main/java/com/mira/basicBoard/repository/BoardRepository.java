@@ -48,6 +48,10 @@ public class BoardRepository {
 		return boardMapper.boardUpdate(board);
 	}
 
+	public void increaseViewCount(int boardNo) {
+		boardMapper.increaseViewCount(boardNo);
+	}
+
 
 
 }

@@ -24,6 +24,8 @@ public interface BoardMapper {
 
 	public int boardUpdate(Board board);
 
+	public void increaseViewCount(int boardNo);
+
 
 
 }

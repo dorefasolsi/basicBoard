@@ -25,7 +25,8 @@ public class UserController {
 
 	
 	@GetMapping("/login/page")
-	public ModelAndView loginPage(@ModelAttribute("msg") String msg, ModelAndView mv) {
+	public ModelAndView loginPage(@ModelAttribute("msg") String msg) {
+		ModelAndView mv = new ModelAndView();
 		log.info(msg);
 		mv.addObject("msg", msg);
 		mv.setViewName("/user/loginPage");
@@ -49,14 +50,17 @@ public class UserController {
 
 	@PostMapping("/enroll/enroll")
 	public ModelAndView enrollProcess(ModelAndView mv, User user, RedirectAttributes redirectAttributes) {
-		String msg = "";
 		int result = userService.enrollProcess(user);
+		String msg = "";
 		
 		if(result != 0) {
-			msg = "회원가입에 성공하였습니다.";
+			msg = "축하! 회원가입에 성공하였습니다.";
+		} else {
+			msg = "회원가입에 실패하였습니다. 관리자에게 문의하세요";
 		}
 		
-		redirectAttributes.addFlashAttribute(msg);
+//		redirectAttributes.addFlashAttribute(msg);
+		mv.addObject("msg", msg);
 		mv.setViewName("/user/loginPage");
 		
 		return mv;

@@ -67,7 +67,15 @@
 				, BOARDCONTENT = #{boardContent}
 			where 
 				BOARDNO = #{boardNo};
+	</update>
 	
+	<update id="increaseViewCount" parameterType="int">
+	
+		update BOARD
+			set 
+				VIEWCOUNT = VIEWCOUNT + 1 
+			where 
+				BOARDNO = #{boardNo};
 	
 	</update>
 

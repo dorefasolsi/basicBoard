@@ -58,9 +58,7 @@ $(function(){
           }
       })
       
-      $('#enorllUserPwdCheck').click(function(){
-          alert("dd");
-      })
+
       
       $('#enorllUserPwdCheck').blur(function(){
           var $enrollUserPwd = $('#enrollUserPwd').val();
@@ -82,6 +80,7 @@ $(function(){
           
           if(!regExp.test($enrollUserName)){
               $('#name-feedback').val("2~14자 사이로 한글만 입력하세요.");
+              $('#enrollUserName').val("");
               return false;
           }
           else if(regExp.test($enrollUserName)){

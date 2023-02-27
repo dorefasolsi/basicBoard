@@ -45,6 +45,14 @@ public class BoardController {
 	    mv.addObject("boardList", boardList).addObject("pi", pi);
 	    mv.addObject("msg", msg);
 	    
+	    
+	    ArrayList hoho = new ArrayList();
+	    hoho.add("a");
+	    hoho.add("b");
+	    hoho.add("c");
+	    
+	    mv.addObject("hoho", hoho);
+	    
 	    mv.setViewName("/board/listPage");
 	    
 	    return mv;
@@ -83,8 +91,9 @@ public class BoardController {
 		
 		Board detailBoard = boardService.boardDetail(boardNo);
 		
-		mv.addObject("detailBoard", detailBoard);
+		boardService.increaseViewCount(boardNo);
 		
+		mv.addObject("detailBoard", detailBoard);
 		mv.setViewName("/board/detailPage");
 		return mv;
 	}
