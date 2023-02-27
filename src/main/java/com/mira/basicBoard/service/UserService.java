@@ -40,13 +40,13 @@ public class UserService implements UserDetailsService{
 	
 	//사용자 정보 등록
 	@Transactional // 트랜잭션으로 묶임 -> ACID!!!!! 하나의 작업단위로 실행된다는 뜻
-	public void enrollProcess(User user) {
+	public int enrollProcess(User user) {
 		//사용자 정보 암호화
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		user.setUserPwd(passwordEncoder.encode(user.getUserPwd()));
 		user.setRole("ROLE_USER"); //추가할것! 어떻게 들어왔을 때 어떤 권한을 줄 것인지?
 		//db등록
-		userMapper.enrollProcess(user);
+		return userMapper.enrollProcess(user);
 	}
 
 	//동일아이디 존재유무 조회

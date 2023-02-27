@@ -2,12 +2,11 @@ package com.mira.basicBoard.controller;
 
 import java.util.ArrayList;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -33,23 +32,21 @@ public class BoardController {
 	
 
 	@GetMapping({"/", "/board/list"})
-	public ModelAndView mainPage(@RequestParam(value="currentPage", defaultValue="1") int currentPage, HttpServletRequest request) {
-	    ModelAndView mv = new ModelAndView();
+	public ModelAndView mainPage(@RequestParam(value="currentPage", defaultValue="1") int currentPage,
+												@ModelAttribute("msg") String msg) {
 	    
-	    int listCount = boardService.boardListCount();
+		ModelAndView mv = new ModelAndView();
+		int listCount = boardService.boardListCount(); 
 	    
 	    PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
 	    
 	    ArrayList<Board> boardList = boardService.boardList(pi);
 	    
 	    mv.addObject("boardList", boardList).addObject("pi", pi);
-	    
-	    String msg = (String)request.getAttribute("msg");
-	    if (msg != null) {
-	        mv.addObject("msg", msg);
-	    }
+	    mv.addObject("msg", msg);
 	    
 	    mv.setViewName("/board/listPage");
+	    
 	    return mv;
 	}
 	
@@ -62,23 +59,23 @@ public class BoardController {
 	}
 	
 	@PostMapping("/board/write")
-	public String boardWrite(@AuthenticationPrincipal User user, Board board, RedirectAttributes redirectAttributes) {
-	    board.setUserId(user.getUserId());
+	public ModelAndView boardWrite(@AuthenticationPrincipal User user, Board board, RedirectAttributes redirectAttributes) {
+	    
+		board.setUserId(user.getUserId());
 	    int result = boardService.boardWrite(board);
 	    String msg = "";
 	    
 	    if(result != 0) {
 	        msg = "게시글 작성에 성공하였습니다.";
-	        redirectAttributes.addFlashAttribute("msg", msg);
+
 	    } else {
 	        log.info("결과는 " + Integer.toString(result) + " , 실패!");
 	        msg = "게시글 작성에 실패하였습니다.";
-	        redirectAttributes.addFlashAttribute("msg", msg);
 	    }
 	    
-	    log.info((String)redirectAttributes.getAttribute(msg));
-	    return "redirect:/board/list";
-	    //레스트컨트롤러~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~모델에앤뷰로보내야한댓늗내~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	    redirectAttributes.addFlashAttribute("msg", msg);
+	    return new ModelAndView("redirect:/board/list");
+	    
 	}
 	
 	@GetMapping("/board/{boardNo}")

@@ -3,10 +3,12 @@ package com.mira.basicBoard.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mira.basicBoard.service.UserService;
 import com.mira.basicBoard.vo.ResponseDto;
@@ -23,7 +25,9 @@ public class UserController {
 
 	
 	@GetMapping("/login/page")
-	public ModelAndView loginPage(ModelAndView mv) {
+	public ModelAndView loginPage(@ModelAttribute("msg") String msg, ModelAndView mv) {
+		log.info(msg);
+		mv.addObject("msg", msg);
 		mv.setViewName("/user/loginPage");
 		return mv;
 	}
@@ -44,9 +48,15 @@ public class UserController {
 	}
 
 	@PostMapping("/enroll/enroll")
-	public ModelAndView enrollProcess(ModelAndView mv, User user) {
+	public ModelAndView enrollProcess(ModelAndView mv, User user, RedirectAttributes redirectAttributes) {
+		String msg = "";
+		int result = userService.enrollProcess(user);
 		
-		userService.enrollProcess(user);
+		if(result != 0) {
+			msg = "회원가입에 성공하였습니다.";
+		}
+		
+		redirectAttributes.addFlashAttribute(msg);
 		mv.setViewName("/user/loginPage");
 		
 		return mv;

@@ -2,7 +2,12 @@
  * 
  */
 
- 
+/* 공통 */
+$(function(){
+	if(msg !== null && msg !== ""){
+		alert(msg);		
+	}
+})	
 
 
 /* enroll */
