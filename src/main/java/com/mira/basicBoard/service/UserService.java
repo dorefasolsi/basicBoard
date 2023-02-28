@@ -1,6 +1,5 @@
 package com.mira.basicBoard.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,7 +12,9 @@ import com.mira.basicBoard.repository.UserRepository;
 import com.mira.basicBoard.vo.User;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService{
@@ -31,6 +32,9 @@ public class UserService implements UserDetailsService{
 		
 		User user = userMapper.getUserAccount(userId);
 		
+		if(user != null) {
+			
+		}
 		if(user == null) {
 			throw new UsernameNotFoundException("User " + userId + " not found");
 		}

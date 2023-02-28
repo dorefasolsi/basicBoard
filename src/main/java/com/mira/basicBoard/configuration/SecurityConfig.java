@@ -8,19 +8,20 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import com.mira.basicBoard.service.UserService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
@@ -32,10 +33,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     	http	.csrf().disable();
         http
         		.authorizeRequests()
-        			.antMatchers("/", "/login/**", "/enroll/**", "/board/{boardNo}", "/css/**", "/javaScript/**").permitAll()
-//        			.antMatchers("/board/").hasAnyRole("USER");
-        			.anyRequest().hasAnyRole("USER");
-//        			.anyRequest().authenticated(); // 모든 요청에 인증 필요
+        		.antMatchers("/", "/login/**", "/enroll/**", "/css/**", "/javaScript/**").permitAll()
+        		.antMatchers(HttpMethod.GET, "/board/**").permitAll()
+        		.antMatchers(HttpMethod.POST, "/board/**").hasAnyRole("USER")
+        		.antMatchers(HttpMethod.PUT, "/board/**").hasAnyRole("USER")
+        		.antMatchers(HttpMethod.DELETE, "/board/**").hasAnyRole("USER")
+        		.anyRequest().authenticated();
         
         http
         		.formLogin()
@@ -49,15 +52,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 						@Override
 						public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 								AuthenticationException exception) throws IOException, ServletException {
-//	                        System.out.println("getMessage : " + exception.getMessage());
-//	                        System.out.println("getCause : " + exception.getCause());
-//	                        System.out.println("getStackTrace : " + exception.getStackTrace());
-//	                        System.out.println("getLocalizedMessage : " + exception.getLocalizedMessage());
-//	                        System.out.println("getSuppressed : " + exception.getSuppressed());
+							log.debug("getMessage : " + exception.getMessage());
+							log.debug("getCause : " + exception.getCause());
+							log.debug("getStackTrace : " + exception.getStackTrace());
+							log.debug("getLocalizedMessage : " + exception.getLocalizedMessage());
+							log.debug("getSuppressed : " + exception.getSuppressed());
+							
 	                        response.sendRedirect("/login/fail");
 						}
 	        		});
-
+        http	.exceptionHandling()
+        			.accessDeniedPage("/error/405");
     }
     
     //사용자인증처리
