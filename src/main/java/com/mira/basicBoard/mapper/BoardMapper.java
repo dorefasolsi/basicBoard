@@ -13,19 +13,16 @@ public interface BoardMapper {
 
 	public ArrayList<Board> boardList(RowBounds rowbounds); // 게시글 리스트
 
-	public int boardListCount(); //게시글 수
+	public int countBoardList(); //게시글 수
 
-	public int boardWrite(Board board);
+	public int writeBoard(Board board);
 
-
-	public Board boardDetail(int boardNo);
-
-	public int boardDelete(int boardNo);
-
-	public int boardUpdate(Board board);
+	public Board detailBoard(int boardNo);
 
 	public void increaseViewCount(int boardNo);
 
+	public int deleteBoard(int boardNo);
 
+	public int updateBoard(Board board);
 
 }

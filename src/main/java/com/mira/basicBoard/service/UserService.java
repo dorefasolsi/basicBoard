@@ -18,10 +18,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService{
 	
-	@Autowired
-	private UserMapper userMapper;
-	@Autowired
-	private UserRepository userRepository;
+
+	private final UserMapper userMapper;
+	
+	private final UserRepository userRepository;
 	
 	//로그인 시 사용자 정보 가져오기 위한 코드
 	//인증 처리 구현체인 UserDetailService 사용자 인증에 필요한 정보 제공

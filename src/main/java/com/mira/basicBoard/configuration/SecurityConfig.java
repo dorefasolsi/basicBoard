@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         http
         		.authorizeRequests()
         			.antMatchers("/", "/login/**", "/enroll/**", "/board/{boardNo}", "/css/**", "/javaScript/**").permitAll()
-        			.antMatchers("/board/**").hasAnyRole("USER")
+//        			.antMatchers("/board/").hasAnyRole("USER");
         			.anyRequest().hasAnyRole("USER");
 //        			.anyRequest().authenticated(); // 모든 요청에 인증 필요
         
@@ -43,18 +43,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	        		.loginProcessingUrl("/login/process")
 	        		.usernameParameter("userId")
 	        		.passwordParameter("userPwd")
-	        		.successHandler(new AuthenticationSuccessHandler( ) {
-						@Override
-						public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-								Authentication authentication) throws IOException, ServletException {
-//	                        System.out.println("authentication : " + authentication.getName());
-//	                        System.out.println("getAuthorities : " + authentication.getAuthorities());
-//	                        System.out.println("getCredentials : " + authentication.getCredentials());
-//	                        System.out.println("getDetails : " + authentication.getDetails());
-//	                        System.out.println("getClass : " + authentication.getClass());
-	                        response.sendRedirect("/board/list");
-						}
-	        		})
+	        		.defaultSuccessUrl("/board/list")
+//	        		.failureUrl("/login/fail") -> 핸들러에서 처리해주는게 나을 것 같은데... 수정!!!!!!
 	        		.failureHandler(new AuthenticationFailureHandler() {
 						@Override
 						public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
@@ -66,8 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 //	                        System.out.println("getSuppressed : " + exception.getSuppressed());
 	                        response.sendRedirect("/login/fail");
 						}
-	        		})
-	        		.permitAll();
+	        		});
 
     }
     

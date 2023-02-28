@@ -23,14 +23,15 @@
 	
 	<div class="container" id="b_container">
         <h2>자유게시판</h2>
+        
         <div class="d-flex flex-row-reverse">
 			<th:block th:if="${#authentication.name != null and #authentication.name != 'anonymousUser'}">
 			  <div class="p-2 bg-dark" id="write_btn">
 			    <a href="/board/write" th:attr="disabled=${true} ? '' : 'disabled'">글쓰기</a>
 			  </div>
 			</th:block>
-			
         </div>
+        
 		<table class="table" id="boardTable">
 			<thead class="thead-dark">
 				<tr>

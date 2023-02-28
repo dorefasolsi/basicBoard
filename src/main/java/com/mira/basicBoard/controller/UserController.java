@@ -14,14 +14,15 @@ import com.mira.basicBoard.service.UserService;
 import com.mira.basicBoard.vo.ResponseDto;
 import com.mira.basicBoard.vo.User;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 public class UserController {
 	
-	@Autowired
-	private UserService userService;
+	private final UserService userService;
 
 	
 	@GetMapping("/login/page")
@@ -34,17 +35,14 @@ public class UserController {
 	}
 	
 	@GetMapping("/login/fail")
-	public ModelAndView loginFailReturn(ModelAndView mv, User user) {
-		
-		
+	public ModelAndView loginFailView(ModelAndView mv, User user) {
 		mv.setViewName("/user/loginFail");
 		return mv;
 	}
 
 	@GetMapping("/enroll/page")
-	public ModelAndView enrollPageReturn(ModelAndView mv) {
+	public ModelAndView enrollPageView(ModelAndView mv) {
 		mv.setViewName("/user/enrollPage");
-		
 		return mv;
 	}
 
@@ -59,7 +57,6 @@ public class UserController {
 			msg = "회원가입에 실패하였습니다. 관리자에게 문의하세요";
 		}
 		
-//		redirectAttributes.addFlashAttribute(msg);
 		mv.addObject("msg", msg);
 		mv.setViewName("/user/loginPage");
 		

@@ -5,11 +5,13 @@ import org.springframework.stereotype.Repository;
 
 import com.mira.basicBoard.mapper.UserMapper;
 
+import lombok.RequiredArgsConstructor;
+
 @Repository
+@RequiredArgsConstructor
 public class UserRepository {
 
-	@Autowired
-	private UserMapper userMapper;
+	private final UserMapper userMapper;
 	
 	public int enrollValidate(String userId) {
 		return userMapper.enrollValidate(userId);

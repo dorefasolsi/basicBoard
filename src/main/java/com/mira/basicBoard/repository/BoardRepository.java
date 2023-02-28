@@ -10,47 +10,48 @@ import com.mira.basicBoard.mapper.BoardMapper;
 import com.mira.basicBoard.vo.Board;
 import com.mira.basicBoard.vo.PageInfo;
 
+import lombok.RequiredArgsConstructor;
+
 @Repository
+@RequiredArgsConstructor
 public class BoardRepository {
 	
-	@Autowired
-	private BoardMapper boardMapper;
+	private final BoardMapper boardMapper;
 	
 	
 	public ArrayList<Board> boardList(PageInfo pi) {
-
 		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
 		int limit = pi.getBoardLimit();
 		
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		return boardMapper.boardList(rowBounds);
-		
-		
 	}
 
-	public int boardListCount() {
-		return boardMapper.boardListCount();
+	public int countBoardList() {
+		return boardMapper.countBoardList();
 	}
 
-	public int boardWrite(Board board) {
-		return boardMapper.boardWrite(board);
+	public int writeBoard(Board board) {
+		return boardMapper.writeBoard(board);
 	}
 
-	public Board boardDetail(int boardNo) {
-		return boardMapper.boardDetail(boardNo);
-	}
-
-	public int boardDelete(int boardNo) {
-		return boardMapper.boardDelete(boardNo);
-	}
-
-	public int boardUpdate(Board board) {
-		return boardMapper.boardUpdate(board);
+	public Board detailBoard(int boardNo) {
+		return boardMapper.detailBoard(boardNo);
 	}
 
 	public void increaseViewCount(int boardNo) {
 		boardMapper.increaseViewCount(boardNo);
 	}
+	
+	public int deleteBoard(int boardNo) {
+		return boardMapper.deleteBoard(boardNo);
+	}
+
+	public int updateBoard(Board board) {
+		return boardMapper.updateBoard(board);
+	}
+
+
 
 
 

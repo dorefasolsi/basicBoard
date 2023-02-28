@@ -22,14 +22,14 @@
 
 	</select>
 	
-	<select id="boardListCount" resultType="int"> 
+	<select id="countBoardList" resultType="int"> 
 	
 		select COUNT(*)
 			from BOARD;
 	
 	</select>
 	
-	<insert id="boardWrite" parameterType="board">
+	<insert id="writeBoard" parameterType="board">
 	
 		insert 
 			into BOARD(
@@ -46,21 +46,21 @@
 	</insert>
 	
 	
-	<select id="boardDetail" resultMap="BoardResultSet" parameterType="int">
+	<select id="detailBoard" resultMap="BoardResultSet" parameterType="int">
 		select *
 			from BOARD
 			where BOARDNO = #{boardNo}; 
 	</select>
 	
 	
-	<delete id="boardDelete" parameterType="int">
+	<delete id="deleteBoard" parameterType="int">
 		delete 
 			from BOARD
 			where BOARDNO = #{boardNo};
 	</delete>
 
 
-	<update id="boardUpdate" parameterType="board">
+	<update id="updateBoard" parameterType="board">
 		update BOARD
 			set
 				BOARDTITLE = #{boardTitle}

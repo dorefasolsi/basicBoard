@@ -21,28 +21,28 @@ import com.mira.basicBoard.vo.Board;
 import com.mira.basicBoard.vo.PageInfo;
 import com.mira.basicBoard.vo.User;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 public class BoardController {
 	
-	@Autowired
-	private BoardService boardService;
+	private final BoardService boardService;
 	
-
 	@GetMapping({"/", "/board/list"})
 	public ModelAndView mainPage(@RequestParam(value="currentPage", defaultValue="1") int currentPage,
 												@ModelAttribute("msg") String msg) {
 	    
 		ModelAndView mv = new ModelAndView();
-		int listCount = boardService.boardListCount(); 
+		int listCount = boardService.countBoardList(); 
 	    
 	    PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
 	    
-	    ArrayList<Board> boardList = boardService.boardList(pi);
+	    ArrayList<Board> boards = boardService.boardList(pi);
 	    
-	    mv.addObject("boardList", boardList).addObject("pi", pi);
+	    mv.addObject("boards", boards).addObject("pi", pi);
 	    mv.addObject("msg", msg);
 	    
 	    
@@ -60,17 +60,17 @@ public class BoardController {
 	
 
 	@GetMapping("/board/write")
-	public ModelAndView boardWritePage(ModelAndView mv) {
+	public ModelAndView writePageView(ModelAndView mv) {
 		
 		mv.setViewName("/board/writePage");
 		return mv;
 	}
 	
 	@PostMapping("/board/write")
-	public ModelAndView boardWrite(@AuthenticationPrincipal User user, Board board, RedirectAttributes redirectAttributes) {
+	public ModelAndView writeBoard(@AuthenticationPrincipal User user, Board board, RedirectAttributes redirectAttributes) {
 	    
 		board.setUserId(user.getUserId());
-	    int result = boardService.boardWrite(board);
+	    int result = boardService.writeBoard(board);
 	    String msg = "";
 	    
 	    if(result != 0) {
@@ -87,9 +87,9 @@ public class BoardController {
 	}
 	
 	@GetMapping("/board/{boardNo}")
-	public ModelAndView boardDetail(@PathVariable("boardNo") int boardNo, ModelAndView mv) {
+	public ModelAndView detailBoard(@PathVariable("boardNo") int boardNo, ModelAndView mv) {
 		
-		Board detailBoard = boardService.boardDetail(boardNo);
+		Board detailBoard = boardService.detailBoard(boardNo);
 		
 		boardService.increaseViewCount(boardNo);
 		
@@ -100,28 +100,28 @@ public class BoardController {
 	
 	
 	@DeleteMapping("/board/{boardNo}")
-	public ModelAndView boardDelete(@PathVariable("boardNo") int boardNo, ModelAndView mv) {
+	public ModelAndView deleteBoard(@PathVariable("boardNo") int boardNo, ModelAndView mv) {
 		
-		int result = boardService.boardDelete(boardNo);
+		int result = boardService.deleteBoard(boardNo);
 		mv.setViewName("redirect:/board/list");
 		return mv;
 	}
 	
 	
 	@GetMapping("/board/update/{boardNo}")
-	public ModelAndView boardUpdatePage(@PathVariable("boardNo") int boardNo, ModelAndView mv) {
+	public ModelAndView updateBoardView(@PathVariable("boardNo") int boardNo, ModelAndView mv) {
 	
-		Board detailBoard = boardService.boardDetail(boardNo);
+		Board detailBoard = boardService.detailBoard(boardNo);
 		mv.addObject("detailBoard", detailBoard);
 		mv.setViewName("/board/updatePage");
 		return mv;
 	}
 	
 	@PutMapping("/board/update")	
-	public ModelAndView boardUpdate(ModelAndView mv, Board board) {
+	public ModelAndView updateBoard(ModelAndView mv, Board board) {
 		
 		
-		int result = boardService.boardUpdate(board);
+		int result = boardService.updateBoard(board);
 		mv.setViewName("redirect:/board/list");
 		
 		return mv;

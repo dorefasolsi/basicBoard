@@ -14,9 +14,6 @@
     
 	<script th:inline="javascript">	   
 	    var msg = /*[[${msg}]]*/ [];
-	    console.log(msg);
-	    
-	    
 	    /* 새로고침 방지 -> 회원가입 후 새로고침 시 동일 쿼리 재전송 되는 문제 해결용*/
 		function NotReload(){				// ctrl+n(78) / ctrl+r(82) / f5키(116) 눌렸을 때
 		    if( (event.ctrlKey == true && (event.keyCode == 78 || event.keyCode == 82)) || (event.keyCode == 116) ) {
@@ -26,48 +23,47 @@
 		    } 
 		}
 		document.onkeydown = NotReload;
-
-		</script>
+	</script>
 	<script script th:inline="javascript" th:src="@{/javaScript/script.js}"></script>
 	<link rel="stylesheet" th:href="@{/css/style.css}"/>
 
     <title>환영합니다</title>
 </head>
 <body>
-    <div class="container" id="b_container">
-        <h2>로그인</h2>
-        <p>로그인하세요.</p>
-
-        <form th:action="@{/login/process}" method="post" class="was-validated">
-            <div class="form-group">
-                <label for="username">Id:</label>
-                <input type="text" class="form-control" id="loginUserId" placeholder="" name="userId" required>
-                <div class="valid-feedback"></div>
-                <div class="invalid-feedback" readonly>아이디를 입력하세요.</div>
-            </div>
-            <div class="form-group">
-                <label for="userPw">Password:</label>
-                <input type="password" class="form-control" id="loginUserPwd" placeholder="" name="userPwd" required>
-                <div class="valid-feedback"></div>
-                <div class="invalid-feedback" readonly >비밀번호를 입력하세요</div>
-            </div>
-            
-        
-            <div class="d-flex justify-content-around">
-                <div class="p-2"><button type="submit" class="btn btn-primary">로그인</button></div>
-            
-                <div class="p-2">
-                    <button type="button" class="btn btn-primary">
-                        <a href="/enroll/page" id="enroll_a">회원가입</a>
-                    </button>
-                </div>
-            </div>
-            
-        </form>
-
-        
-
-    </div>
+	<div class="container" id="b_container">
+	    <h2>로그인</h2>
+	    <p>로그인하세요.</p>
+	
+	    <form th:action="@{/login/process}" method="post" class="was-validated">
+	        <div class="form-group">
+	            <label for="username">Id:</label>
+	            <input type="text" class="form-control" id="loginUserId" placeholder="" name="userId" required>
+	            <div class="valid-feedback"></div>
+	            <div class="invalid-feedback" readonly>아이디를 입력하세요.</div>
+	        </div>
+	        <div class="form-group">
+	            <label for="userPw">Password:</label>
+	            <input type="password" class="form-control" id="loginUserPwd" placeholder="" name="userPwd" required>
+	            <div class="valid-feedback"></div>
+	            <div class="invalid-feedback" readonly>비밀번호를 입력하세요</div>
+	        </div>
+	        
+	    
+	        <div class="d-flex justify-content-around">
+	            <div class="p-2"><button type="submit" class="btn btn-primary">로그인</button></div>
+	        
+	            <div class="p-2">
+	                <button type="button" class="btn btn-primary">
+	                    <a href="/enroll/page" id="enroll_a">회원가입</a>
+	                </button>
+	            </div>
+	        </div>
+	        
+	    </form>
+	
+	    
+	
+	</div>
   
 </body>
 </html>

@@ -22,74 +22,68 @@
 </head>
 
 <body>
-<script>
-	
-</script>
+
 	<div class="d-flex" id="userInfo_div">
-		<div class="p-2">
-	  		<div th:replace="~{common/header :: header}"></div>
-		</div>
+	    <div class="p-2">
+	        <div th:replace="~{common/header :: header}"></div>
+	    </div>
 	</div>
 	
 	<div class="container" id="b_container">
-        <h2>자유게시판</h2>
-        <div class="d-flex flex-row-reverse">
-			<th:block th:if="${#authentication.name != null and #authentication.name != 'anonymousUser'}">
-			  <div class="p-2 bg-dark text-white" id="write_btn">
-			    <a href="/board/write" th:attr="disabled=${true} ? '' : 'disabled'">글쓰기</a>
-			  </div>
-			</th:block>
-			
-        </div>
-		<table class="table" id="boardTable">
-			<thead class="thead-dark">
-				<tr>
-	            	<th>글번호</th>
-	            	<th>제목</th>
-	            	<th>작성일</th>
-	            	<th>작성자</th>
-	            	<th>조회수</th>
+	    <h2>자유게시판</h2>
+	    <div class="d-flex flex-row-reverse">
+	        <th:block th:if="${#authentication.name != null and #authentication.name != 'anonymousUser'}">
+	            <div class="p-2 bg-dark text-white" id="write_btn">
+	                <a href="/board/write" th:attr="disabled=${true} ? '' : 'disabled'">글쓰기</a>
+	            </div>
+	        </th:block>
+	    </div>
+	    <table class="table" id="boardTable">
+	        <thead class="thead-dark">
+	            <tr>
+	                <th>글번호</th>
+	                <th>제목</th>
+	                <th>작성일</th>
+	                <th>작성자</th>
+	                <th>조회수</th>
 	            </tr>
-          	</thead>
-          	<tbody>
- 	            <tr th:each="list : ${boardList}">
-		              <td th:text="${list.boardNo}" class="boardNo"></td>
-		              <td th:text="${list.boardTitle}"></td>
-		              <td th:text="${list.createDate}"></td>
-		              <td th:text="${list.userId}"></td>
-		              <td th:text="${list.viewCount}"></td>
+	        </thead>
+	        <tbody>
+	            <tr th:each="list : ${boards}">
+	                <td th:text="${list.boardNo}" class="boardNo"></td>
+	                <td th:text="${list.boardTitle}"></td>
+	                <td th:text="${list.createDate}"></td>
+	                <td th:text="${list.userId}"></td>
+	                <td th:text="${list.viewCount}"></td>
 	            </tr> 
-          	</tbody>
-        
-        </table>
+	        </tbody>
+	    </table>
 	</div>
+	
 	<div class="container">
-		<ul class="pagination d-flex justify-content-center">
-			<th:block th:if="${pi.listCount > 0}">
-				<li class="page-item" th:classappend="${pi.currentPage eq 1} ? 'disabled' : ''">
-					<a class="page-link" th:href="@{/board/list(currentPage=${pi.currentPage - 1})}" th:text="이전"></a>
-				</li>
-			</th:block>
-
-			<th:block th:if="${pi.listCount > 0}">
-			    <th:block th:each="p : ${#numbers.sequence(pi.startPage, pi.endPage)}">
-			        <li class="page-item">
-			            <a class="page-link" th:href="@{/board/list(currentPage=${p})}" th:text="${p}"></a>
-			        </li>
-			    </th:block>
-			</th:block>
-			
-			<th:block th:if="${pi.listCount > 0}">
-				<li class="page-item" th:classappend="${pi.currentPage eq pi.maxPage} ? 'disabled' : ' '">
-					<a class="page-link" th:href="@{/board/list(currentPage=${pi.currentPage + 1})}" th:text="다음"></a>
-				</li>
-			</th:block>
-
-		
-		</ul>
+	    <ul class="pagination d-flex justify-content-center">
+	        <th:block th:if="${pi.listCount > 0}">
+	            <li class="page-item" th:classappend="${pi.currentPage eq 1} ? 'disabled' : ''">
+	                <a class="page-link" th:href="@{/board/list(currentPage=${pi.currentPage - 1})}" th:text="이전"></a>
+	            </li>
+	        </th:block>
+	
+	        <th:block th:if="${pi.listCount > 0}">
+	            <th:block th:each="p : ${#numbers.sequence(pi.startPage, pi.endPage)}">
+	                <li class="page-item">
+	                    <a class="page-link" th:href="@{/board/list(currentPage=${p})}" th:text="${p}"></a>
+	                </li>
+	            </th:block>
+	        </th:block>
+	
+	        <th:block th:if="${pi.listCount > 0}">
+	            <li class="page-item" th:classappend="${pi.currentPage eq pi.maxPage} ? 'disabled' : ' '">
+	                <a class="page-link" th:href="@{/board/list(currentPage=${pi.currentPage + 1})}" th:text="다음"></a>
+	            </li>
+	        </th:block>
+	    </ul>
 	</div>
-	
-	
+		
 
 
 </body>
