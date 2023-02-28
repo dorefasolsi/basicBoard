@@ -15,24 +15,24 @@
 	<!-- 게시글 전체 조회 -->
 	<select id="boardList" resultMap="BoardResultSet">
 
- 		select * 
-			from BOARD
-			order by boardNo desc
+ 		select		* 
+		from 		BOARD
+		where		STATUS = 'Y'
+		order by	BOARDNO DESC
 			
 
 	</select>
 	
 	<select id="countBoardList" resultType="int"> 
 	
-		select COUNT(*)
-			from BOARD;
+		select	COUNT(*)
+		from	BOARD;
 	
 	</select>
 	
 	<insert id="writeBoard" parameterType="board">
 	
-		insert 
-			into BOARD(
+		insert into BOARD(
 						BOARDTITLE
 						, BOARDCONTENT
 						, USERID
@@ -41,41 +41,36 @@
 						#{boardTitle}
 						, #{boardContent}
 						, #{userId}
-				
 						);	
 	</insert>
 	
 	
 	<select id="detailBoard" resultMap="BoardResultSet" parameterType="int">
-		select *
-			from BOARD
-			where BOARDNO = #{boardNo}; 
+		select 	*
+		from 	BOARD
+		where 	BOARDNO = #{boardNo}; 
 	</select>
 	
 	
-	<delete id="deleteBoard" parameterType="int">
-		delete 
-			from BOARD
-			where BOARDNO = #{boardNo};
-	</delete>
+	<update id="deleteBoard" parameterType="int">
+		update	BOARD
+		set		STATUS = 'N' 
+		where	BOARDNO = #{boardNo};
+	</update>
 
 
 	<update id="updateBoard" parameterType="board">
-		update BOARD
-			set
-				BOARDTITLE = #{boardTitle}
+		update	BOARD
+		set		BOARDTITLE = #{boardTitle}
 				, BOARDCONTENT = #{boardContent}
-			where 
-				BOARDNO = #{boardNo};
+		where 	BOARDNO = #{boardNo};
 	</update>
 	
 	<update id="increaseViewCount" parameterType="int">
 	
-		update BOARD
-			set 
-				VIEWCOUNT = VIEWCOUNT + 1 
-			where 
-				BOARDNO = #{boardNo};
+		update	BOARD
+		set 	VIEWCOUNT = VIEWCOUNT + 1 
+		where	BOARDNO = #{boardNo};
 	
 	</update>
 
