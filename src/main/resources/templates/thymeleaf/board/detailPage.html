@@ -64,7 +64,7 @@
 		    <form th:action="@{'/board/update/'+${detailBoard.boardNo}}" th:method="get">
 		        <div class="p-2"><button id="left_btn" type="submit">수정하기</button></div>
 		    </form>
-		    <form id="deleteForm" th:action="@{'/board/'+${detailBoard.boardNo}}" th:method="delete">
+		    <form id="deleteForm" th:action="@{'/board/'+${detailBoard.boardNo}+'/delete'}" th:method="put">
 		        <div class="p-2"><button id="right_btn" type="button" onclick="deleteBtn_click()">삭제하기</button></div>
 		    </form>
 		</th:block>

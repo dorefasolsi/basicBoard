@@ -99,7 +99,7 @@ public class BoardController {
 	}
 	
 	
-	@DeleteMapping("/board/{boardNo}")
+	@PutMapping("/board/{boardNo}/delete")
 	public ModelAndView deleteBoard(@PathVariable("boardNo") int boardNo, ModelAndView mv) {
 		
 		int result = boardService.deleteBoard(boardNo);
