@@ -2,9 +2,7 @@ package com.mira.basicBoard.controller;
 
 import java.util.ArrayList;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,17 +39,17 @@ public class BoardController {
 	    PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
 	    
 	    ArrayList<Board> boards = boardService.boardList(pi);
-	    
+	     
 	    mv.addObject("boards", boards).addObject("pi", pi);
-	    mv.addObject("msg", msg);
+//	    mv.addObject("msg", msg);
 	    
+//	    ArrayList hoho = new ArrayList();
+//	    hoho.add("a");
+//	    hoho.add("b");     
+//	    hoho.add("c");
+//	    
+//	    mv.addObject("hoho", hoho);
 	    
-	    ArrayList hoho = new ArrayList();
-	    hoho.add("a");
-	    hoho.add("b");
-	    hoho.add("c");
-	    
-	    mv.addObject("hoho", hoho);
 	    
 	    mv.setViewName("/board/listPage");
 	    
@@ -74,11 +72,11 @@ public class BoardController {
 	    String msg = "";
 	    
 	    if(result != 0) {
-	        msg = "게시글 작성에 성공하였습니다.";
+	        msg = "게시글이 등록되었습니다.";
 
 	    } else {
 	        log.info("결과는 " + Integer.toString(result) + " , 실패!");
-	        msg = "게시글 작성에 실패하였습니다.";
+	        msg = "error";
 	    }
 	    
 	    redirectAttributes.addFlashAttribute("msg", msg);
@@ -100,11 +98,12 @@ public class BoardController {
 	
 	
 	@PutMapping("/board/{boardNo}/delete")
-	public ModelAndView deleteBoard(@PathVariable("boardNo") int boardNo, ModelAndView mv) {
+	public ModelAndView deleteBoard(@PathVariable("boardNo") int boardNo, RedirectAttributes redirectAttributes) {
 		
 		int result = boardService.deleteBoard(boardNo);
-		mv.setViewName("redirect:/board/list");
-		return mv;
+		String msg = "게시글이 삭제되었습니다.";
+		redirectAttributes.addFlashAttribute("msg", msg);
+		return new ModelAndView("redirect:/board/list");
 	}
 	
 	
@@ -118,13 +117,14 @@ public class BoardController {
 	}
 	
 	@PutMapping("/board/update")	
-	public ModelAndView updateBoard(ModelAndView mv, Board board) {
+	public ModelAndView updateBoard(ModelAndView mv, Board board, RedirectAttributes redirectAttributes) {
 		
 		
 		int result = boardService.updateBoard(board);
-		mv.setViewName("redirect:/board/list");
+		String msg = "게시글 수정이 완료되었습니다.";
 		
-		return mv;
+		redirectAttributes.addFlashAttribute("msg", msg);
+		return new ModelAndView("redirect:/board/list");
 	}
 	
 	

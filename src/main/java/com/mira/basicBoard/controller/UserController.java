@@ -28,7 +28,6 @@ public class UserController {
 	@GetMapping("/login/page")
 	public ModelAndView loginPage(@ModelAttribute("msg") String msg) {
 		ModelAndView mv = new ModelAndView();
-		log.info(msg);
 		mv.addObject("msg", msg);
 		mv.setViewName("/user/loginPage");
 		return mv;
@@ -52,7 +51,7 @@ public class UserController {
 		String msg = "";
 		
 		if(result != 0) {
-			msg = "축하! 회원가입에 성공하였습니다.";
+			msg = "당신은 이제 나의 회원~❤❤";
 		} else {
 			msg = "회원가입에 실패하였습니다. 관리자에게 문의하세요";
 		}

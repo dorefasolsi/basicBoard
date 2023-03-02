@@ -3,12 +3,20 @@
  */
 
 /* 공통 */
-$(function(){
+/*$(function(){
 	if(msg !== null && msg !== ""){
 		alert(msg);		
 	}
-})	
+})	*/
 
+function alertMsg(msg){
+	
+	if(msg !== null && msg !== "" && typeof msg !== "undefined"){
+		alert(msg);		
+	}
+		
+
+}
 
 /* enroll */
 $(function(){
