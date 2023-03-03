@@ -55,8 +55,8 @@ public class BoardController {
 	    if(category!=null && !category.equals("") && keyword!=null) {
 	    	mv.addObject("category", category).addObject("keyword", keyword);
 	    }
-
-	    System.out.println(pi.getMaxPage());
+	    
+	    log.info("최대페이지는 : " + pi.getMaxPage());
 	    
 	    mv.addObject("boards", boards).addObject("pi", pi);
 	    mv.setViewName("/board/listPage");
