@@ -31,17 +31,7 @@ public class BoardController {
 	
 	
 	@GetMapping("/board/search")
-	public ModelAndView searchTest(String category, String keyword, ModelAndView mv) {
-		log.info(category);
-		if(category.equals("boardTitle")) {
-			log.info("제목검색이 들어왔다~");
-		} else if(category.equals("userId")){
-			log.info("작성자검색이들어왔당");
-		} else {
-			log.info("이퀄스아님?ㅠㅠ"+category);
-		}
-		log.info(keyword);
-		
+	public ModelAndView searchTest(String category, String keyword, ModelAndView mv) {		
 		ArrayList<Board> boards = boardService.searchTest(category, keyword);
 		
 		mv.addObject("boards", boards);
@@ -55,6 +45,7 @@ public class BoardController {
 								String category, String keyword) {
 	    
 		ModelAndView mv = new ModelAndView();
+		
 		int listCount = boardService.countBoardList(category, keyword); 
 	    
 	    PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
@@ -65,6 +56,8 @@ public class BoardController {
 	    	mv.addObject("category", category).addObject("keyword", keyword);
 	    }
 
+	    System.out.println(pi.getMaxPage());
+	    
 	    mv.addObject("boards", boards).addObject("pi", pi);
 	    mv.setViewName("/board/listPage");
 	    

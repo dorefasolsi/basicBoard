@@ -31,7 +31,7 @@
 		
 	<select id="searchTest" parameterType="String" resultMap="BoardResultSet">
 	    select * from board
-	    where 1 = 1
+	    where status = 'Y'
 	    <if test="category == 'boardTitle'">
 	        and boardTitle like '%${keyword}%'
 	    </if>
