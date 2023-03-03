@@ -22,7 +22,7 @@ public class boardTest {
 	
 	
 	@Test
-	public void testEnroll() {
+	public void testSearch() {
 		String userId = "p13786873";
 		
 		int result = userMapper.enrollValidate(userId);
@@ -30,16 +30,5 @@ public class boardTest {
 		
 	}
 	
-//	@Test
-//	public void testEnroll2() {
-//		Board board = new Board();
-//		board.setBoardTitle("d");
-//		board.setBoardContent("dd");
-//		board.setUserId("admin");
-//		
-//		int result = boardMapper.boardWrite(board);
-//		
-//		System.out.println(result);
-//		
-//	}
+
 }

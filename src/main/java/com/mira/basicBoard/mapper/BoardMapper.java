@@ -25,4 +25,6 @@ public interface BoardMapper {
 
 	public int updateBoard(Board board);
 
+	public ArrayList<Board> searchTest(String category, String keyword);
+
 }

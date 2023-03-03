@@ -29,6 +29,16 @@ public class BoardController {
 	
 	private final BoardService boardService;
 	
+	
+	@GetMapping("/board/search")
+	public void searchTest(String category, String keyword) {
+		log.info(category);
+		log.info(keyword);
+		
+		ArrayList<Board> boards = boardService.searchTest(category, keyword);
+		
+	}
+	
 	@GetMapping({"/", "/board/list"})
 	public ModelAndView mainPage(@RequestParam(value="currentPage", defaultValue="1") int currentPage,
 												@ModelAttribute("msg") String msg) {

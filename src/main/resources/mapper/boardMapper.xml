@@ -73,6 +73,13 @@
 		where	BOARDNO = #{boardNo};
 	
 	</update>
+	
+	
+	<select id="searchTest" parameterType="String" resultMap="BoardResultSet">
+		select * from board where boardTitle = #{category}
+	
+	
+	</select>
 
 
 

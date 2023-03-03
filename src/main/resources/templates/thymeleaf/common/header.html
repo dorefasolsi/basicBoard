@@ -18,15 +18,13 @@
 <!-- 	<button><a href="@{/test}">dd</a></button> -->
     <div class="d-flex" id="userInfo_div">
         <!-- 검색 -->
-        <form>
+        <form action="/board/search">
             <div class="input-group mt-3 mb-3 header_searchBar">
 				<select th:name="category">
-					<option value="하하">하하</option>
-					<option value="ㅎㅎ">ㅇㅇ</option>
-					<option value="ㅋㅋ">ㄷㄷ</option>
-				
+					<option value="boardTitle">하하</option>
+					<option value="userId">ㅇㅇ</option>
 				</select>
-                <input type="text" class="form-control" placeholder="검색어를 입력하세요">
+                <input type="text" name="keyword" class="form-control" placeholder="검색어를 입력하세요">
                 <button>검색</button>
             </div>
         </form>

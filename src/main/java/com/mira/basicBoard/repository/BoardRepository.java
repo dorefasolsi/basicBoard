@@ -51,6 +51,11 @@ public class BoardRepository {
 		return boardMapper.updateBoard(board);
 	}
 
+	public ArrayList<Board> searchTest(String category, String keyword) {
+		
+		return boardMapper.searchTest(category, keyword);
+	}
+
 
 
 
