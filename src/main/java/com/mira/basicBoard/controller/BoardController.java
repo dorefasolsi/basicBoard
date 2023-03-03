@@ -52,26 +52,20 @@ public class BoardController {
 	
 	@GetMapping({"/", "/board/list"})
 	public ModelAndView mainPage(@RequestParam(value="currentPage", defaultValue="1") int currentPage,
-												@ModelAttribute("msg") String msg) {
+								String category, String keyword) {
 	    
 		ModelAndView mv = new ModelAndView();
-		int listCount = boardService.countBoardList(); 
+		int listCount = boardService.countBoardList(category, keyword); 
 	    
 	    PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
 	    
-	    ArrayList<Board> boards = boardService.boardList(pi);
+	    ArrayList<Board> boards = boardService.boardList(pi, category, keyword);
 	     
+	    if(category!=null && !category.equals("") && keyword!=null) {
+	    	mv.addObject("category", category).addObject("keyword", keyword);
+	    }
+
 	    mv.addObject("boards", boards).addObject("pi", pi);
-//	    mv.addObject("msg", msg);
-	    
-//	    ArrayList hoho = new ArrayList();
-//	    hoho.add("a");
-//	    hoho.add("b");     
-//	    hoho.add("c");
-//	    
-//	    mv.addObject("hoho", hoho);
-	    
-	    
 	    mv.setViewName("/board/listPage");
 	    
 	    return mv;

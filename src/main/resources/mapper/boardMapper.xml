@@ -18,15 +18,40 @@
  		select		* 
 		from 		BOARD
 		where		STATUS = 'Y'
+	    <if test="category == 'boardTitle'">
+	        and boardTitle like '%${keyword}%'
+	    </if>
+	    <if test="category == 'userId'">
+	    	and userId = #{keyword}
+	    </if>
 		order by	BOARDNO DESC
 			
 
+	</select>
+		
+	<select id="searchTest" parameterType="String" resultMap="BoardResultSet">
+	    select * from board
+	    where 1 = 1
+	    <if test="category == 'boardTitle'">
+	        and boardTitle like '%${keyword}%'
+	    </if>
+	    <if test="category == 'userId'">
+	    	and userId = #{keyword}
+	    </if>
 	</select>
 	
 	<select id="countBoardList" resultType="int"> 
 	
 		select	COUNT(*)
-		from	BOARD;
+		from	BOARD
+		where 1 = 1
+	    <if test="category == 'boardTitle'">
+	        and boardTitle like '%${keyword}%'
+	    </if>
+	    <if test="category == 'userId'">
+	    	and userId = #{keyword}
+	    </if>
+		
 	
 	</select>
 	
@@ -74,17 +99,7 @@
 	
 	</update>
 	
-	
-	<select id="searchTest" parameterType="String" resultMap="BoardResultSet">
-	    select * from board
-	    where 1 = 1
-	    <if test="category == 'boardTitle'">
-	        and boardTitle like '%${keyword}%'
-	    </if>
-	    <if test="category == 'userId'">
-	        and userId like '%${keyword}%'
-	    </if>
-	</select>
+
 
 
 

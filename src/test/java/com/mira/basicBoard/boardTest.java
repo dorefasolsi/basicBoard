@@ -1,5 +1,8 @@
 package com.mira.basicBoard;
 
+import java.util.ArrayList;
+
+import org.apache.ibatis.session.RowBounds;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -9,7 +12,9 @@ import com.mira.basicBoard.mapper.BoardMapper;
 import com.mira.basicBoard.mapper.UserMapper;
 import com.mira.basicBoard.vo.Board;
 
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @SpringBootTest
 public class boardTest {
 	
@@ -21,12 +26,10 @@ public class boardTest {
 	private BoardMapper boardMapper;
 	
 	
+
 	@Test
 	public void testSearch() {
-		String userId = "p13786873";
-		
-		int result = userMapper.enrollValidate(userId);
-		System.out.println(result);
+
 		
 	}
 	

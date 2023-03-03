@@ -18,13 +18,13 @@ public class BoardService {
 	private final BoardRepository boardRepository;
 	
 	//전체 게시글 조회
-	public ArrayList<Board> boardList(PageInfo pi) {
-		return boardRepository.boardList(pi);
+	public ArrayList<Board> boardList(PageInfo pi, String category, String keyword) {
+		return boardRepository.boardList(pi, category, keyword);
 	}
 
 	//총 게시글수 조회
-	public int countBoardList() {
-		return boardRepository.countBoardList();
+	public int countBoardList(String category, String keyword) {
+		return boardRepository.countBoardList(category, keyword);
 	}
 
 	//게시글 작성

@@ -19,16 +19,16 @@ public class BoardRepository {
 	private final BoardMapper boardMapper;
 	
 	
-	public ArrayList<Board> boardList(PageInfo pi) {
+	public ArrayList<Board> boardList(PageInfo pi, String category, String keyword) {
 		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
 		int limit = pi.getBoardLimit();
 		
 		RowBounds rowBounds = new RowBounds(offset, limit);
-		return boardMapper.boardList(rowBounds);
+		return boardMapper.boardList(rowBounds, category, keyword);
 	}
 
-	public int countBoardList() {
-		return boardMapper.countBoardList();
+	public int countBoardList(String category, String keyword) {
+		return boardMapper.countBoardList(category, keyword);
 	}
 
 	public int writeBoard(Board board) {

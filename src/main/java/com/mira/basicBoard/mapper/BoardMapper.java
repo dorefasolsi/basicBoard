@@ -11,9 +11,9 @@ import com.mira.basicBoard.vo.Criteria;
 @Mapper
 public interface BoardMapper {
 
-	public ArrayList<Board> boardList(RowBounds rowbounds); // 게시글 리스트
+	public ArrayList<Board> boardList(RowBounds rowbounds, String category, String keyword); // 게시글 리스트
 
-	public int countBoardList(); //게시글 수
+	public int countBoardList(String category, String keyword); //게시글 수
 
 	public int writeBoard(Board board);
 
