@@ -82,7 +82,7 @@
 	        and boardTitle like '%${keyword}%'
 	    </if>
 	    <if test="category == 'userId'">
-	    	and userId = #{keyword}
+	        and userId like '%${keyword}%'
 	    </if>
 	</select>
 
