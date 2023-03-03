@@ -30,16 +30,6 @@ public class BoardController {
 	private final BoardService boardService;
 	
 	
-	@GetMapping("/board/search")
-	public ModelAndView searchTest(String category, String keyword, ModelAndView mv) {		
-		ArrayList<Board> boards = boardService.searchTest(category, keyword);
-		
-		mv.addObject("boards", boards);
-		mv.setViewName("/board/searchPage");
-		
-	    return mv;
-	}
-	
 	@GetMapping({"/", "/board/list"})
 	public ModelAndView mainPage(@RequestParam(value="currentPage", defaultValue="1") int currentPage,
 								String category, String keyword) {

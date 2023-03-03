@@ -25,7 +25,7 @@ public class boardTest {
 		
 		Board board = new Board();
 		
-		//21개 삽입
+		//79개 삽입
 		for(int i = 1; i < 80; i++) {
 			board.setBoardTitle("더미" + i);
 			board.setBoardContent("더미내용" + i);

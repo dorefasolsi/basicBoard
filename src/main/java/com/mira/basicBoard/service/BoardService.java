@@ -54,10 +54,6 @@ public class BoardService {
 		return boardRepository.updateBoard(board);
 	}
 
-	public ArrayList<Board> searchTest(String category, String keyword) {
-		return boardRepository.searchTest(category, keyword);
-	}
-
 
 
 
