@@ -14,14 +14,14 @@
   	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
 	<script type="text/javascript" th:src="@{/javaScript/script.js}"></script>
-
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	
 
     <title>게시글 작성</title>
 </head>
 <body>
 	<div class="container" id="b_container">
-	    <form action="/board/write" method="post">
+	    <form action="/board/write" method="post" enctype="multipart/form-data">
 	        <div class="container">
 	            <h2>글쓰기</h2>
 	            <p>자유롭게 글을 작성하세요.</p>
@@ -40,6 +40,12 @@
 	                        placeholder="3000자 이내로 입력하실 수 있습니다."></textarea>
 	                    </td>
 	                </tr>
+	                <tr>
+				        <td class="b_title">파일첨부</td>
+				        <td>
+				        	<input type="file" id="write_file_input" name="file"><button type="button" id="write_file_cancle_button">X</button>
+				        </td>
+		    		</tr>
 	            </table>
 	        </div>
 	        <div class="d-flex justify-content-center mb-3">
@@ -53,5 +59,40 @@
 	    </form>
 	</div>
 
+<script>
+/* 	$(document).ready(function() {
+	    $("#write_file_input").on("change", function() {
+	        var formData = new FormData();
+	        formData.append("file", $("#write_file_input")[0].files[0]);
+	
+	        $.ajax({
+	            url: "/fileTest",
+	            type: "POST",
+	            processData: false,
+	            contentType: false,
+	            data: formData,
+	            success: function(data) {
+	            	
+	            },
+	            error: function(xhr, status, error) {
+	            	
+	            }
+	        });
+	    });
+	    
+	}); */
+	
+    $("#write_file_cancle_button").on("click", function(){
+    	console.log("g")
+    	$("#write_file_input").val("");
+    });
+	$("#write_file_input").on("change", function(){
+	    var file = $("#write_file_input")[0].files[0];
+	    console.log("파일 이름: " + file.name);
+	    console.log("파일 크기: " + file.size + " bytes");
+	    console.log("파일 타입: " + file.type);
+	})
+
+</script>
 </body>
 </html>
