@@ -1,16 +1,14 @@
 package com.mira.basicBoard.controller;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.mira.basicBoard.mapper.BoardMapper;
 import com.mira.basicBoard.service.BoardService;
 import com.mira.basicBoard.template.Pagination;
 import com.mira.basicBoard.vo.Attachment;
@@ -38,6 +37,7 @@ import lombok.extern.slf4j.Slf4j;
 public class BoardController {
 	
 	private final BoardService boardService;
+	private final BoardMapper boardMapper;
 	
 	
 
@@ -74,25 +74,33 @@ public class BoardController {
 		return mv;
 	}
 	
+	@Transactional
 	@PostMapping("/board/write")
 	public ModelAndView writeBoard(@AuthenticationPrincipal User user, 
 									@RequestParam(value="file") MultipartFile file,
 									Board board, RedirectAttributes redirectAttributes) throws IOException {
 	    
 		board.setUserId(user.getUserId());
-		
-		log.info("넘어온 파일명" + file.getName());
-		
+		int result = 0;
+
 		if(!file.isEmpty()) {
-			Attachment attachment = new Attachment();
-			attachment = saveFile(file);
-			attachment.setOriginName(file.getOriginalFilename());
-//			attachment.setStoredName(changeFileName(file));
+			board.setAttachment("Y");
+			result = boardService.writeBoard(board);
+
+			int boardNo = boardMapper.selectLastInsertId();
+			board.setBoardNo(boardNo);
+			Attachment attachment = saveFile(file, board);
+			
+			int attachmentResult = boardService.insertAttachment(attachment);
+//			int attachmentResult = boardMapper.insertAttachment(attachment);	
+			
+		} else {
+			result = boardService.writeBoard(board);
+			
 		}
 		
 		
 		
-	    int result = boardService.writeBoard(board);
 	    String msg = "";
 	    
 	    if(result != 0) {
@@ -108,14 +116,21 @@ public class BoardController {
 	    
 	}
 	
+	//게시글 조회
 	@GetMapping("/board/{boardNo}")
 	public ModelAndView detailBoard(@PathVariable("boardNo") int boardNo, ModelAndView mv) {
 		
 		Board detailBoard = boardService.detailBoard(boardNo);
+		Attachment attachment = new Attachment();
 		
+		if(detailBoard.getAttachment().equals("Y")) {			
+			attachment = boardService.selectAttachment(boardNo);
+		}
 		boardService.increaseViewCount(boardNo);
 		
-		mv.addObject("detailBoard", detailBoard);
+		mv.addObject("detailBoard", detailBoard).addObject("attachment", attachment);
+
+		
 		mv.setViewName("/board/detailPage");
 		return mv;
 	}
@@ -143,7 +158,6 @@ public class BoardController {
 	@PutMapping("/board/update")	
 	public ModelAndView updateBoard(ModelAndView mv, Board board, RedirectAttributes redirectAttributes) {
 		
-		
 		int result = boardService.updateBoard(board);
 		String msg = "게시글 수정이 완료되었습니다.";
 		
@@ -153,7 +167,7 @@ public class BoardController {
 	
 	
 	
-	public Attachment saveFile(MultipartFile file) throws IOException {
+	public Attachment saveFile(MultipartFile file, Board board) throws IOException {
 		
 		Attachment attachment = new Attachment();
 		
@@ -171,9 +185,11 @@ public class BoardController {
 		//날짜 -> 20230306143307494.jpg						-> 파일명 중복O, 파일명이 의미있는 값을 가짐
 
 		
-		
 		attachment.setOriginName(originName);
 		attachment.setStoredName(storedName);
+		attachment.setStatus("Y");
+		attachment.setBoardNo(board.getBoardNo());
+		attachment.setUserId(board.getUserId());
 
 		//파일이 저장될 경로
 		//C드라이브부터 경로출력
@@ -195,8 +211,8 @@ public class BoardController {
 		
 		log.info("원본파일명 " + originName);
 		log.info("변경파일명 " + storedName);
-		log.info("저장경로 " + attachment.getPath());
-		
+		log.info("저장경로 " + attachment.getPath());	
+		log.info(attachment.toString());
 
 		return attachment;
 	}

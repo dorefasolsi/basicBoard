@@ -2,10 +2,12 @@ package com.mira.basicBoard.service;
 
 import java.util.ArrayList;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.mira.basicBoard.mapper.BoardMapper;
 import com.mira.basicBoard.repository.BoardRepository;
+import com.mira.basicBoard.vo.Attachment;
 import com.mira.basicBoard.vo.Board;
 import com.mira.basicBoard.vo.PageInfo;
 
@@ -16,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 public class BoardService {
 
 	private final BoardRepository boardRepository;
+	private final BoardMapper boardMapper;
 	
 	//전체 게시글 조회
 	public ArrayList<Board> boardList(PageInfo pi, String category, String keyword) {
@@ -32,9 +35,20 @@ public class BoardService {
 		return boardRepository.writeBoard(board);
 	}
 
+	//첨부파일 삽입
+	@Transactional
+	public int insertAttachment(Attachment attachment) {
+		
+		return boardMapper.insertAttachment(attachment);
+	}
+	
 	//게시글 상세조회
 	public Board detailBoard(int boardNo) {
 		return boardRepository.detailBoard(boardNo);
+	}
+	
+	public Attachment selectAttachment(int boardNo) {
+		return boardRepository.selectAttachment(boardNo);
 	}
 
 	//조회수 증가
@@ -53,6 +67,10 @@ public class BoardService {
 	public int updateBoard(Board board) {
 		return boardRepository.updateBoard(board);
 	}
+
+	
+
+	
 
 
 

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.RowBounds;
 
+import com.mira.basicBoard.vo.Attachment;
 import com.mira.basicBoard.vo.Board;
 import com.mira.basicBoard.vo.Criteria;
 
@@ -26,5 +27,12 @@ public interface BoardMapper {
 	public int updateBoard(Board board);
 
 	public ArrayList<Board> searchTest(String category, String keyword);
+
+	public int selectLastInsertId();
+
+	public int insertAttachment(Attachment attachment);
+
+	public Attachment selectAttachment(int boardNo);
+
 
 }

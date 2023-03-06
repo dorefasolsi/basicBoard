@@ -16,4 +16,5 @@ public class Board {
 	private Date createDate;
 	private String userId;
 	private int viewCount;
+	private String attachment;
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.mira.basicBoard.mapper.BoardMapper;
+import com.mira.basicBoard.vo.Attachment;
 import com.mira.basicBoard.vo.Board;
 import com.mira.basicBoard.vo.PageInfo;
 
@@ -49,6 +50,10 @@ public class BoardRepository {
 
 	public int updateBoard(Board board) {
 		return boardMapper.updateBoard(board);
+	}
+
+	public Attachment selectAttachment(int boardNo) {
+		return boardMapper.selectAttachment(boardNo);
 	}
 
 

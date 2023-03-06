@@ -10,6 +10,18 @@
 		<result column="createDate" property="createDate" />
 		<result column="userId" property="userId" />
 		<result column="viewCount" property="viewCount" />
+		<result column="attachment" property="attachment" />
+	</resultMap>
+	
+	<resultMap id="AttachmentResultSet" type="com.mira.basicBoard.vo.Attachment">
+		<result column="FILENO" property="fileNo"/>
+		<result column="STOREDNAME" property="storedName"/>
+		<result column="ORIGINNAME" property="originName"/>
+		<result column="PATH" property="path"/>
+		<result column="UPLOADDATE" property="uploadDate"/>
+		<result column="STATUS" property="status"/>
+		<result column="BOARDNO" property="boardNo"/>
+		<result column="USERID" property="userId"/>
 	</resultMap>
 
 	<!-- 게시글 전체 조회 -->
@@ -50,13 +62,39 @@
 						BOARDTITLE
 						, BOARDCONTENT
 						, USERID
+						, ATTACHMENT
 						)
 				values(
 						#{boardTitle}
 						, #{boardContent}
 						, #{userId}
+						, #{attachment}
 						);	
 	</insert>
+	
+	<select id="selectLastInsertId" resultType="int">
+		select LAST_INSERT_ID();
+	</select>
+	
+	<insert id="insertAttachment">
+		insert into ATTACHMENT(
+							ORIGINNAME
+							, STOREDNAME
+							, PATH
+							, STATUS
+							, BOARDNO
+							, USERID
+							)
+					values(
+							#{originName}
+							, #{storedName}
+							, #{path}
+							, #{status}
+							, #{boardNo}
+							, #{userId}
+							);	
+	</insert>
+	
 	
 	
 	<select id="detailBoard" resultMap="BoardResultSet" parameterType="int">
@@ -64,6 +102,21 @@
 		from 	BOARD
 		where 	BOARDNO = #{boardNo}; 
 	</select>
+	
+	<select id="selectAttachment" resultMap="AttachmentResultSet">
+		select	*
+		from 	ATTACHMENT
+		where	BOARDNO = #{boardNo};
+	</select>
+	
+	<update id="increaseViewCount" parameterType="int">
+	
+		update	BOARD
+		set 	VIEWCOUNT = VIEWCOUNT + 1 
+		where	BOARDNO = #{boardNo};
+	
+	</update>
+	
 	
 	
 	<update id="deleteBoard" parameterType="int">
@@ -80,14 +133,7 @@
 		where 	BOARDNO = #{boardNo};
 	</update>
 	
-	<update id="increaseViewCount" parameterType="int">
-	
-		update	BOARD
-		set 	VIEWCOUNT = VIEWCOUNT + 1 
-		where	BOARDNO = #{boardNo};
-	
-	</update>
-	
+
 
 
 
