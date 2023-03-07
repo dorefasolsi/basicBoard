@@ -56,6 +56,10 @@ public class BoardRepository {
 		return boardMapper.selectAttachment(boardNo);
 	}
 
+	public Attachment getAttachment(int fileNo) {
+		return boardMapper.getAttachment(fileNo);
+	}
+
 
 
 

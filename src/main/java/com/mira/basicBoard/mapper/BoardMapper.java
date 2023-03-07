@@ -34,5 +34,7 @@ public interface BoardMapper {
 
 	public Attachment selectAttachment(int boardNo);
 
+	public Attachment getAttachment(int fileNo);
+
 
 }

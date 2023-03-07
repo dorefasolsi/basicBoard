@@ -140,7 +140,11 @@
 	
 
 
-
+	<select id="getAttachment" parameterType="int" resultMap="AttachmentResultSet">
+		select * from attachment where fileNo = #{fileNo}
+	
+	
+	</select>
 
 
 

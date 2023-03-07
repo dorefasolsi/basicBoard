@@ -1,18 +1,19 @@
 package com.mira.basicBoard.controller;
 
-import java.io.FileNotFoundException;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -139,10 +140,15 @@ public class BoardController {
 	}
 	
 	
-	@GetMapping("/attachment/download")
-	public void downloadAttachment() throws FileNotFoundException, IOException{
-		
-		
+	@GetMapping("/attachment/download/{fileNo}")
+	public void downloadAttachment(@PathVariable("fileNo") int fileNo, HttpServletResponse response){
+	    
+	        log.info("파일넘버는" + fileNo);
+	        Attachment attachment = boardService.getAttachment(fileNo);
+	    
+	        log.info("다운로드할 파일명" + attachment.getStoredName());
+	        log.info("다운로드할 파일의 경로" + attachment.getPath());
+	      
 	}
 	
 	
@@ -205,6 +211,11 @@ public class BoardController {
 
 		//파일이 저장될 경로
 		//C드라이브부터 경로출력
+		
+//		절대경로
+//		Path uploadPath = Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "static", "uploadFiles").toAbsolutePath().normalize();
+		
+//		상대경로
 		Path uploadPath = Paths.get("src/main/resources/static/uploadFiles").toAbsolutePath().normalize();
 		
 		//파일명 결정
@@ -213,6 +224,9 @@ public class BoardController {
 		
 		attachment.setPath(uploadPath.toString());
 		
+		attachment.setStoredName(attachment.getPath()+'\\'+attachment.getStoredName());
+		log.info(attachment.getStoredName());
+		
 //		1. 파일복사(파일을 다른 서버에 전송해야 할 경우 더 적합)
 //		try (InputStream inputStream = file.getInputStream()) {
 //		    Files.copy(inputStream, targetLocation, StandardCopyOption.REPLACE_EXISTING);
@@ -220,11 +234,10 @@ public class BoardController {
 		
 //		2. MultipartFile 객체 메서드 이용(일반적)
 		file.transferTo(targetLocation.toFile());
-		
-		log.info("원본파일명 " + originName);
-		log.info("변경파일명 " + storedName);
+		log.info("원본파일명 " + attachment.getOriginName());
+		log.info("변경파일명 " + attachment.getStoredName());
 		log.info("저장경로 " + attachment.getPath());	
-		log.info(attachment.toString());
+		
 
 		return attachment;
 	}

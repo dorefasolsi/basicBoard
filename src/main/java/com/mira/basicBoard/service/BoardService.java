@@ -68,6 +68,10 @@ public class BoardService {
 		return boardRepository.updateBoard(board);
 	}
 
+	public Attachment getAttachment(int fileNo) {
+		return boardRepository.getAttachment(fileNo);
+	}
+
 	
 
 	

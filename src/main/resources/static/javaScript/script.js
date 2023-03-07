@@ -10,12 +10,9 @@
 })	*/
 
 function alertMsg(msg){
-	
 	if(msg !== null && msg !== "" && typeof msg !== "undefined"){
 		alert(msg);		
 	}
-		
-
 }
 
 /* enroll */
