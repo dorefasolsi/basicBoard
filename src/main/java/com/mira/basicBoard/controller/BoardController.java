@@ -1,12 +1,18 @@
 package com.mira.basicBoard.controller;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -92,14 +98,11 @@ public class BoardController {
 			Attachment attachment = saveFile(file, board);
 			
 			int attachmentResult = boardService.insertAttachment(attachment);
-//			int attachmentResult = boardMapper.insertAttachment(attachment);	
 			
 		} else {
 			result = boardService.writeBoard(board);
 			
 		}
-		
-		
 		
 	    String msg = "";
 	    
@@ -134,6 +137,15 @@ public class BoardController {
 		mv.setViewName("/board/detailPage");
 		return mv;
 	}
+	
+	
+	@GetMapping("/attachment/download")
+	public void downloadAttachment() throws FileNotFoundException, IOException{
+		
+		
+	}
+	
+	
 	
 	
 	@PutMapping("/board/{boardNo}/delete")

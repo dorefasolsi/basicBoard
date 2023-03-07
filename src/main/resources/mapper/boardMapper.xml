@@ -62,13 +62,18 @@
 						BOARDTITLE
 						, BOARDCONTENT
 						, USERID
+		<if test="attachment != null">
 						, ATTACHMENT
+		</if>
 						)
+						
 				values(
 						#{boardTitle}
 						, #{boardContent}
 						, #{userId}
+		<if test="attachment != null">
 						, #{attachment}
+		</if>
 						);	
 	</insert>
 	

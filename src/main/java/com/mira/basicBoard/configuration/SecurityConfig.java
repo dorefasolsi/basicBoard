@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     	http	.csrf().disable();
         http
         		.authorizeRequests()
-        		.antMatchers("/", "/login/**", "/enroll/**", "/board/list", "/board/{boardNo}", "/css/**", "/javaScript/**").permitAll()
+        		.antMatchers("/", "/login/**", "/enroll/**", "/board/list", "/board/{boardNo}", "/css/**", "/javaScript/**", "/uploadFiles/**").permitAll()
         		//메인페이지, 작성창, 조회창, 업데이트창, 
         		.antMatchers(HttpMethod.GET, "/board/write", "/board/update/**").hasAnyRole("USER")
         		.antMatchers(HttpMethod.POST, "/board/**").hasAnyRole("USER")
