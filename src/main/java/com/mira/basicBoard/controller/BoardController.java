@@ -1,19 +1,19 @@
 package com.mira.basicBoard.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -141,14 +141,52 @@ public class BoardController {
 	
 	
 	@GetMapping("/attachment/download/{fileNo}")
-	public void downloadAttachment(@PathVariable("fileNo") int fileNo, HttpServletResponse response){
+	public ResponseEntity<Resource> downloadAttachment(@PathVariable("fileNo") int fileNo) throws Exception {
+	    Attachment attachment = boardService.getAttachment(fileNo);
 	    
-	        log.info("파일넘버는" + fileNo);
-	        Attachment attachment = boardService.getAttachment(fileNo);
+	    Path file = Paths.get(attachment.getStoredName());
+	    log.info("변경파일명 : " + attachment.getStoredName());
+	    //  C:\mira\\basicBoard\\basicBoard\\src\\main\\resources\\static\\uploadFiles\\20230307162438689.txt형태로 들어가있음
 	    
-	        log.info("다운로드할 파일명" + attachment.getStoredName());
-	        log.info("다운로드할 파일의 경로" + attachment.getPath());
-	      
+	    log.info("file에는 : " + file.toString());
+	    // 	위와 동일하게 출력
+	    
+	    
+	    // Resource ->  org.springframework.core.io.Resource 객체
+	    // 			->	파일 데이터 담고 있음
+	    Resource resource = new UrlResource(file.toUri());
+	    log.info("리소스의 uri"+resource.getURI());
+	    //  file:///C:/mira/basicBoard/basicBoard/src/main/resources/static/uploadFiles/20230307162438689.txt
+	    
+	    
+	    
+	    HttpHeaders headers = new HttpHeaders();
+	    headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + attachment.getOriginName() + "\"");
+	    log.info("헤더정보" + headers.toString());
+	    //	헤더에 다운로드 받을 파일명 설정
+	    //	CONTENT-DISPOSITON => HTTP응답에서 보내는 컨텐츠 표시명, 표시방법을 명시하는 헤더
+	    //						> 다운로드할 파일의 originName포함해 사용자에게 보여질 파일명 지정하기 위해 사용
+	    //	attachment 값은 다운로드할 파일, filename은 다운로드할 파일명 지정
+	    //	" -> 공백이 있을 경우 인식 못하는 경우 있어서 사용, \는 "를 이스케이프하기 위함(X 시 큰따옴표가 문자열끝으로 인식)
+	    //	HttpHeaders에 "attachment; filename=다운로드할 파일명"형식으로 컨텐츠 처리할 것임을 지시
+	    //	toString 출력 시 : [Content-Disposition:"attachment; filename="Script.txt""]
+
+	    
+	    log.info("ResponseEntity의 contentType : " + MediaType.APPLICATION_OCTET_STREAM);
+	    
+	    		// 스프링프레임워크에서 제공하는 HTTP응답 포함하는 클래스
+	    		// HTTP응답코드, 헤더, 본문데이터 포함
+	    return ResponseEntity
+					    		.ok()	//상태코드 200 -> 정상
+					            .headers(headers) 
+					            // 응답에 해더 추가 x 시 이진데이터 바이너리코드 출력
+					            // 헤더의 역할 : CONTENT-DISPOSITON헤더 추가해 브라우저가 다운로드할 파일명 알 수 있도록 하고, 이진데이터 다운로드 가능
+					            
+					            .body(resource); 
+	    						//파일 데이터 포함
+	    						//이렇게 보내면 클라이언트에서 이진 데이터를 받아서 파일저장 / 바로출력 가능
+	    			
+	    	
 	}
 	
 	
