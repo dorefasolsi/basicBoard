@@ -1,12 +1,10 @@
 package com.mira.basicBoard.controller;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 
 import org.springframework.core.io.Resource;
@@ -26,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.util.UriUtils;
 
 import com.mira.basicBoard.mapper.BoardMapper;
 import com.mira.basicBoard.service.BoardService;
@@ -161,8 +160,9 @@ public class BoardController {
 	    
 	    
 	    HttpHeaders headers = new HttpHeaders();
-	    headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + attachment.getOriginName() + "\"");
-	    log.info("헤더정보" + headers.toString());
+
+	    
+	    //  (수정이전)headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + attachment.getOriginName() + "\"");
 	    //	헤더에 다운로드 받을 파일명 설정
 	    //	CONTENT-DISPOSITON => HTTP응답에서 보내는 컨텐츠 표시명, 표시방법을 명시하는 헤더
 	    //						> 다운로드할 파일의 originName포함해 사용자에게 보여질 파일명 지정하기 위해 사용
@@ -171,6 +171,11 @@ public class BoardController {
 	    //	HttpHeaders에 "attachment; filename=다운로드할 파일명"형식으로 컨텐츠 처리할 것임을 지시
 	    //	toString 출력 시 : [Content-Disposition:"attachment; filename="Script.txt""]
 
+	    String headerValue = String.format("attachment; filename*=UTF-8''%s", UriUtils.encode(attachment.getOriginName(), "UTF-8"));
+	    //	(수정버전)한글파일 다운로드x 깨지는 오류 ->  인코딩 설정
+	    headers.add(HttpHeaders.CONTENT_DISPOSITION, headerValue);
+	    log.info("헤더정보" + headers.toString());
+	    
 	    
 	    log.info("ResponseEntity의 contentType : " + MediaType.APPLICATION_OCTET_STREAM);
 	    
