@@ -21,7 +21,7 @@
 </head>
 <body>
 	<div class="container" id="b_container">
-	    <form action="/board/write" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
+	    <form th:action="@{'/board/write'}" th:method="post" enctype="multipart/form-data" accept-charset="UTF-8">
 	        <div class="container">
 	            <h2>글쓰기</h2>
 	            <p>자유롭게 글을 작성하세요.</p>
@@ -60,24 +60,6 @@
 	</div>
 
 <script>
-/* 	$(document).ready(function() {
-	    $("#write_file_input").on("change", function() {
-	        var formData = new FormData();
-	        formData.append("file", $("#write_file_input")[0].files[0]);
-	
-	        $.ajax({
-	            url: "/fileTest",
-	            type: "POST",
-	            processData: false,
-	            contentType: false,
-	            data: formData,
-	            success: function(data) {
-	            	
-	            }
-	        });
-	    });
-	    
-	}); */
 	
     $("#write_file_cancle_button").on("click", function(){
     	$("#write_file_input").val("");

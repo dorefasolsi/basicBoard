@@ -105,13 +105,15 @@
 	<select id="detailBoard" resultMap="BoardResultSet" parameterType="int">
 		select 	*
 		from 	BOARD
-		where 	BOARDNO = #{boardNo}; 
+		where 	BOARDNO = #{boardNo}
+		and		STATUS = 'Y';
 	</select>
 	
 	<select id="selectAttachment" resultMap="AttachmentResultSet">
 		select	*
 		from 	ATTACHMENT
-		where	BOARDNO = #{boardNo};
+		where	BOARDNO = #{boardNo}
+		and 	STATUS = 'Y';
 	</select>
 	
 	<update id="increaseViewCount" parameterType="int">
@@ -129,12 +131,32 @@
 		set		STATUS = 'N' 
 		where	BOARDNO = #{boardNo};
 	</update>
+	
+	
+	<update id="deleteAttachment" parameterType="int">
+	    update	ATTACHMENT
+	    set 	STATUS = 'N'
+	    where	BOARDNO = #{boardNo}
+	    
 
+	</update>
+	
+	
+	<update id="deleteAttachmentFileNo" parameterType="com.mira.basicBoard.vo.Attachment">
+		update	BOARD, ATTACHMENT 
+	    set 	BOARD.ATTACHMENT = 'N'
+	    		, ATTACHMENT.STATUS ='N' 
+	    WHERE 	BOARD.BOARDNO = ATTACHMENT.BOARDNO 
+	    and 	BOARD.BOARDNO = #{boardNo} 
+	    and 	ATTACHMENT.FILENO = #{fileNo};
+	</update>
+	
 
 	<update id="updateBoard" parameterType="board">
 		update	BOARD
 		set		BOARDTITLE = #{boardTitle}
 				, BOARDCONTENT = #{boardContent}
+				, ATTACHMENT = #{attachment}
 		where 	BOARDNO = #{boardNo};
 	</update>
 	
@@ -142,8 +164,6 @@
 
 	<select id="getAttachment" parameterType="int" resultMap="AttachmentResultSet">
 		select * from attachment where fileNo = #{fileNo}
-	
-	
 	</select>
 
 
