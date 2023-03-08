@@ -56,11 +56,12 @@
 		    </tr>
 		    <tr>
 		        <td class="b_title">첨부파일</td>
-		        <td><input type="text" class="b_context" th:value="${attachment.originName}" readonly></td>		        
+		        <td id="attach-td">
+					<a th:href="${{attachment.storedName}}" th:download="${{ attachment.originName }}" th:text="${{ attachment.originName }}"></a>
+					<input type="text" id="attach-fileNo" th:value="${attachment.fileNo}">
+		        </td>		        
 		    </tr>
 		</table>
-	          
-	
 		
 		<div class="d-flex justify-content-center mb-3">  
 			<th:block th:if="${#authentication.name.equals(detailBoard.userId)}">
@@ -82,6 +83,13 @@
 			</th:block>
 		</div>        
 	</div>
-  	
+
+<script>
+	$(function(){
+		$("#attach-td").click(function(){
+			location.href = '/attachment/download/' + $(this).children("#attach-fileNo").val();
+		})
+	})
+ </script>
 </body>
 </html>

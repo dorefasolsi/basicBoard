@@ -21,7 +21,7 @@
 </head>
 <body>
 	<div class="container" id="b_container">
-	    <form action="/board/write" method="post" enctype="multipart/form-data">
+	    <form action="/board/write" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
 	        <div class="container">
 	            <h2>글쓰기</h2>
 	            <p>자유롭게 글을 작성하세요.</p>
@@ -73,9 +73,6 @@
 	            data: formData,
 	            success: function(data) {
 	            	
-	            },
-	            error: function(xhr, status, error) {
-	            	
 	            }
 	        });
 	    });
@@ -83,15 +80,8 @@
 	}); */
 	
     $("#write_file_cancle_button").on("click", function(){
-    	console.log("g")
     	$("#write_file_input").val("");
     });
-	$("#write_file_input").on("change", function(){
-	    var file = $("#write_file_input")[0].files[0];
-	    console.log("파일 이름: " + file.name);
-	    console.log("파일 크기: " + file.size + " bytes");
-	    console.log("파일 타입: " + file.type);
-	})
 
 </script>
 </body>
