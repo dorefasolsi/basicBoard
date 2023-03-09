@@ -58,7 +58,14 @@ public class BoardService {
 
 	
 	//게시글 삭제
+	@Transactional
 	public int deleteBoard(int boardNo) {
+		
+		Board attachmentCheck = boardRepository.detailBoard(boardNo);
+		String attachment = attachmentCheck.getAttachment();
+		if(attachment.equals("Y") && attachment != null) {
+			int result = boardRepository.deleteAttachment(boardNo);
+		}
 		return boardRepository.deleteBoard(boardNo);
 	}
 

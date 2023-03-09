@@ -120,6 +120,8 @@ function limitText(inputElement, maxLength) {
 		inputElement.value = inputElement.value.substring(0, maxLength);
 	}
 }
+
+
 	
 /*update*/
 window.onload = $(function(){

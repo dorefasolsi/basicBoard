@@ -23,6 +23,8 @@ public interface BoardMapper {
 	public void increaseViewCount(int boardNo);
 
 	public int deleteBoard(int boardNo);
+	
+	public int deleteAttachment(int board);
 
 	public int updateBoard(Board board);
 
@@ -35,6 +37,8 @@ public interface BoardMapper {
 	public Attachment selectAttachment(int boardNo);
 
 	public Attachment getAttachment(int fileNo);
+
+	public int deleteAttachmentFileNo(Attachment attachment);
 
 
 }

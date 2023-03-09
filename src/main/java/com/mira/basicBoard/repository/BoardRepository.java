@@ -48,6 +48,10 @@ public class BoardRepository {
 		return boardMapper.deleteBoard(boardNo);
 	}
 
+	public int deleteAttachment(int boardNo) {
+		return boardMapper.deleteAttachment(boardNo);
+	}
+	
 	public int updateBoard(Board board) {
 		return boardMapper.updateBoard(board);
 	}
@@ -59,6 +63,7 @@ public class BoardRepository {
 	public Attachment getAttachment(int fileNo) {
 		return boardMapper.getAttachment(fileNo);
 	}
+
 
 
 
