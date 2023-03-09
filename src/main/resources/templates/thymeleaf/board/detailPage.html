@@ -57,7 +57,7 @@
 		    <tr>
 		        <td class="b_title">첨부파일</td>
 		        <td id="attach-td">
-					<a th:href="${{attachment.storedName}}" th:download="${{ attachment.originName }}" th:text="${{ attachment.originName }}"></a>
+					<a th:text="${{ attachment.originName }}"></a>
 					<input type="text" id="attach-fileNo" th:value="${attachment.fileNo}">
 		        </td>		        
 		    </tr>

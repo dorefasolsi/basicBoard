@@ -307,8 +307,6 @@ public class BoardController {
 	    
 	    
 	    HttpHeaders headers = new HttpHeaders();
-
-	    
 	    //  (수정이전)headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + attachment.getOriginName() + "\"");
 	    //	헤더에 다운로드 받을 파일명 설정
 	    //	CONTENT-DISPOSITON => HTTP응답에서 보내는 컨텐츠 표시명, 표시방법을 명시하는 헤더
@@ -333,7 +331,6 @@ public class BoardController {
 					            .headers(headers) 
 					            // 응답에 해더 추가 x 시 이진데이터 바이너리코드 출력
 					            // 헤더의 역할 : CONTENT-DISPOSITON헤더 추가해 브라우저가 다운로드할 파일명 알 수 있도록 하고, 이진데이터 다운로드 가능
-					            
 					            .body(resource); 
 	    						//파일 데이터 포함
 	    						//이렇게 보내면 클라이언트에서 이진 데이터를 받아서 파일저장 / 바로출력 가능
