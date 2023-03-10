@@ -57,8 +57,8 @@
 		    <tr>
 		        <td class="b_title">첨부파일</td>
 		        <td id="attach-td">
-					<a th:text="${{ attachment.originName }}"></a>
-					<input type="text" id="attach-fileNo" th:value="${attachment.fileNo}">
+					<a id="attach-a" th:text="${{ attachment.originName }}"></a>
+					<input type="text" id="attach-fileNo" class="hide" th:value="${attachment.fileNo}" >
 		        </td>		        
 		    </tr>
 		</table>
@@ -86,8 +86,8 @@
 
 <script>
 	$(function(){
-		$("#attach-td").click(function(){
-			location.href = '/attachment/download/' + $(this).children("#attach-fileNo").val();
+		$("#attach-a").click(function(){
+			location.href = '/attachment/download/' + $("#attach-fileNo").val();
 		})
 	})
  </script>

@@ -15,6 +15,13 @@ function alertMsg(msg){
 	}
 }
 
+
+window.onload = $(function(){
+	$('.hide').hide();	    	
+})
+
+
+
 /* enroll */
 $(function(){
   	//아이디 정규식
@@ -124,7 +131,31 @@ function limitText(inputElement, maxLength) {
 
 	
 /*update*/
-window.onload = $(function(){
-	$('.update-hidden-boardNo').hide();	    	
+$(function(){
+	$('#update-file-delete-button').click(function(){
+		var deleteCheck = confirm("첨부파일을 삭제하시겠습니다?");
+		var $fileNo = $('#attach-fileNo').val();
+		var $boardNo = $('#attach-boardNo').val();
+
+		if(deleteCheck == true){
+			$.ajax({
+			    url : "/attachment/delete",
+			    data : {
+			        fileNo : $fileNo,
+			        boardNo : $boardNo
+			    },
+			    type : "post",
+			    success : function(data){
+			        $('#attach-a').text('');
+			        $('#attach-td').load(window.location.href + ' #attach-td');
+			    }
+			})
+		}else{
+			return false;
+		}
+	})
 })
+
+
+
 		

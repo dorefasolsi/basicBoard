@@ -24,10 +24,10 @@
 	            <h2 th:text="${detailBoard.userId}">수정하기</h2>
 	            <p>내용을 변경할 수 있습니다.</p>
 	            <table class="table" th:object="${detailBoard}">
-	                <tr class="update-hidden-boardNo">
-	                    <td class="update-hidden-boardNo">
-	                        <input name="boardNo" th:value="*{boardNo}" class="update-hidden-boardNo">
-	                        <input name="userId" th:value="${detailBoard.userId}" class="update-hidden-boardNo">
+	                <tr class="hide">
+	                    <td class="hide">
+	                        <input name="boardNo" th:value="*{boardNo}" class="hide">
+	                        <input name="userId" th:value="${detailBoard.userId}" class="hide">
 	                        
 	                    </td>
 	                </tr>
@@ -50,10 +50,10 @@
 				        <td class="b_title">첨부<br>파일</td>
 				        <td id="attach-td">
 				        	<div th:if="${attachment != null}">
-								<a id="attach-a" th:href="${{attachment.storedName}}" th:download="${{ attachment.originName }}" th:text="${{ attachment.originName }}"></a>
-								<input type="text" id="attach-fileNo" th:value="${attachment.fileNo}">
-								<input type="text" id="attach-boardNo" th:value="${attachment.boardNo}">
-								<input type="text" id="attachment" th:value="${attachment}">
+								<a id="attach-a" th:text="${{ attachment.originName }}"></a>
+								<input type="text" id="attach-fileNo" class="hide" th:value="${attachment.fileNo}">
+								<input type="text" id="attach-boardNo" class="hide" th:value="${attachment.boardNo}">
+								<input type="text" id="attachment" class="hide" th:value="${attachment}">
 								<button type="button" id="update-file-delete-button">X</button>
 							</div>
 							<div th:unless="${attachment != null}" id="attachment-div">
@@ -74,30 +74,7 @@
 	    </form>
 	</div>
 <script>
-	$(function(){
-		$('#update-file-delete-button').click(function(){
-			var deleteCheck = confirm("첨부파일을 삭제하시겠습니다?");
-			var $fileNo = $('#attach-fileNo').val();
-			var $boardNo = $('#attach-boardNo').val();
 
-			if(deleteCheck == true){
-				$.ajax({
-				    url : "/attachment/delete",
-				    data : {
-				        fileNo : $fileNo,
-				        boardNo : $boardNo
-				    },
-				    type : "post",
-				    success : function(data){
-				        $('#attach-a').text('');
-				        $('#attach-td').load(window.location.href + ' #attach-td');
-				    }
-				})
-			}else{
-				return false;
-			}
-		})
-	})
 
 
 </script>
