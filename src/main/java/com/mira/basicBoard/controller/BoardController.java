@@ -1,10 +1,12 @@
 package com.mira.basicBoard.controller;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 import org.springframework.core.io.Resource;
@@ -112,7 +114,7 @@ public class BoardController {
 	        msg = "게시글이 등록되었습니다.";
 
 	    } else {
-	        log.info("결과는 " + Integer.toString(result) + " , 실패!");
+//	        log.info("결과는 " + Integer.toString(result) + " , 실패!");
 	        msg = "error";
 	    }
 	    
@@ -166,7 +168,7 @@ public class BoardController {
 	
 		Board detailBoard = boardService.detailBoard(boardNo);
 		
-		log.debug("detailBoard" + detailBoard);
+//		log.debug("detailBoard" + detailBoard);
 		if(detailBoard.getAttachment().equals("Y") && detailBoard.getAttachment() != null) {
 			Attachment attachment = boardService.selectAttachment(boardNo);
 			mv.addObject("attachment", attachment);
@@ -179,30 +181,27 @@ public class BoardController {
 	
 	// 게시글 수정
 	@PutMapping("/board/update")	
-	public ModelAndView updateBoard(@RequestParam(value="file") MultipartFile file,
+	public ModelAndView updateBoard(@RequestParam(value="file", required=false) MultipartFile file,
 									ModelAndView mv, 
 									Board board, 
 									RedirectAttributes redirectAttributes) throws IOException {
 		
-		log.info("file" + file);
-		log.info("board" + board);
+		String attachYN = boardMapper.detailBoard(board.getBoardNo()).getAttachment();
+				
 		
-		if(!file.isEmpty()) {
+		if(file != null &&!file.isEmpty()) {
+			log.info("새로 입력된 파일이 있습니다");
 			board.setAttachment("Y");
-			log.info("board" + board);
-			
-			Attachment attachment = saveFile(file, board);
-			
-			log.info("파일변환 : " + attachment);
-			
-			int result = boardService.insertAttachment(attachment);
-			
-			log.info("파일삽입결과 : " + result);
-		} else {			
-			board.setAttachment("N");
+            Attachment attachment = saveFile(file, board);
+            int result = boardService.insertAttachment(attachment);
+		} else if(attachYN.equals("Y")){		
+			log.info("기존 파일이 있습니다.");
+			board.setAttachment("Y");
+		} else {
+			log.info("입력된 파일이 없습니다");
+			board.setAttachment("N");				
 		}
 		
-		log.info("보드는 : " + board);
 		int result = boardService.updateBoard(board);
 		String msg = "게시글 수정이 완료되었습니다.";
 		
@@ -210,12 +209,12 @@ public class BoardController {
 		return new ModelAndView("redirect:/board/list");
 	}
 	
+	
 	//첨부파일 삭제
 	@PostMapping("/attachment/delete")
 	public ResponseDto<Integer> deleteAttachment(Attachment attachment) {
 		//딜리트 ? 삭제 ?
 				
-		log.info("fileNo? : " + attachment);
 		int result = boardMapper.deleteAttachmentFileNo(attachment);
 		
 		if(result != 0) {
