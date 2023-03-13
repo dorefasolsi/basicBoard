@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     	http	.csrf().disable();
         http
         		.authorizeRequests()
-        		.antMatchers("/", "/login/**", "/enroll/**", "/board/list", "/board/{boardNo}", "/css/**", "/javaScript/**", "/uploadFiles/**").permitAll()
+        		.antMatchers("/", "/login/**", "/enroll/**", "/board/list", "/board/{boardNo}", "/css/**", "/javaScript/**", "/uploadFiles/**", "/error/**").permitAll()
         		//메인페이지, 작성창, 조회창, 업데이트창, 
         		.antMatchers(HttpMethod.GET, "/board/write", "/board/update/**").hasAnyRole("USER")
         		.antMatchers(HttpMethod.POST, "/board/**").hasAnyRole("USER")
@@ -48,7 +48,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	        		.usernameParameter("userId")
 	        		.passwordParameter("userPwd")
 	        		.defaultSuccessUrl("/board/list")
-//	        		.failureUrl("/login/fail") -> 핸들러에서 처리해주는게 나을 것 같은데... 수정!!!!!!
 	        		.failureHandler(new AuthenticationFailureHandler() {
 						@Override
 						public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,

@@ -78,7 +78,6 @@ public class BoardController {
 	// 게시글 작성페이지로 이동
 	@GetMapping("/board/write")
 	public ModelAndView writePageView(ModelAndView mv) {
-		
 		mv.setViewName("/board/writePage");
 		return mv;
 	}
@@ -117,10 +116,8 @@ public class BoardController {
 //	        log.info("결과는 " + Integer.toString(result) + " , 실패!");
 	        msg = "error";
 	    }
-	    
 	    redirectAttributes.addFlashAttribute("msg", msg);
 	    return new ModelAndView("redirect:/board/list");
-	    
 	}
 	
 	
@@ -236,9 +233,11 @@ public class BoardController {
 		String storedName = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + "." + extension;
 		//UUID이용 OR 날짜변환 OR 직접생성
 		
+		// 방법1.
 		//String storedName = UUID.randomUUID().toString() + "." + extension;
 		//UUID -> 4c2e9cf5-187d-46a0-879c-4f6879ddb1be.jpg  -> 파일명 중복X
 		
+		// 방법2.
 		//String storedName = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + "." + extension;
 		//yyyyMMddHHmmssSSS -> 년월일시분초밀리초
 		//날짜 -> 20230306143307494.jpg						-> 파일명 중복O, 파일명이 의미있는 값을 가짐
@@ -334,7 +333,5 @@ public class BoardController {
 	    						//이렇게 보내면 클라이언트에서 이진 데이터를 받아서 파일저장 / 바로출력 가능
 	}
 
-	
-	
-	
+		
 }

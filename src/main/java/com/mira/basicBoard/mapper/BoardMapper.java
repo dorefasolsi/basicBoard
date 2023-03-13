@@ -7,7 +7,6 @@ import org.apache.ibatis.session.RowBounds;
 
 import com.mira.basicBoard.vo.Attachment;
 import com.mira.basicBoard.vo.Board;
-import com.mira.basicBoard.vo.Criteria;
 
 @Mapper
 public interface BoardMapper {

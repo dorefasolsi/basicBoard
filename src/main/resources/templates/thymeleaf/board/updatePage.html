@@ -21,7 +21,7 @@
 	<div class="container" id="b_container">
 	    <form th:action="@{'/board/update'}" th:method="PUT" enctype="multipart/form-data" accept-charset="UTF-8">
 	        <div>
-	            <h2 th:text="${detailBoard.userId}">수정하기</h2>
+	            <h2>수정하기</h2>
 	            <p>내용을 변경할 수 있습니다.</p>
 	            <table class="table" th:object="${detailBoard}">
 	                <tr class="hide">

@@ -36,28 +36,28 @@
 		<table class="table" th:object="${detailBoard}">
 			<tr>
 				<td class="b_title">제목</td>
-				<td><input type="text" class="b_context" th:value="*{boardTitle}" readonly></td>
+				<td><input type="text" class="b_context" th:field="*{boardTitle}" readonly></td>
 			</tr>
 			<tr>
 		        <td class="b_title">작성자</td>
-		        <td><input type="text" class="b_context" th:value="*{userId}" readonly></td>
+		        <td><input type="text" class="b_context" th:field="*{userId}" readonly></td>
 		    </tr>
 		    <tr>
 		        <td class="b_title">작성일자</td>
-		        <td><input type="text" class="b_context" th:value="*{createDate}" readonly></td>
+		        <td><input type="text" class="b_context" th:field="*{createDate}" readonly></td>
 		    </tr>
 		    <tr>
 		        <td class="b_title">조회수</td>
-		        <td><input type="text" class="b_context" th:value="*{viewCount}" readonly></td>
+		        <td><input type="text" class="b_context" th:field="*{viewCount}" readonly></td>
 		    </tr>
 		    <tr>
 		        <td class="b_title">내용</td>
-		        <td><textarea class="b_context" id="detail_context" cols="30" rows="10" th:text="*{boardContent}" readonly></textarea></td>
+		        <td><textarea class="b_context" id="detail_context" cols="30" rows="10" th:field="*{boardContent}" readonly></textarea></td>
 		    </tr>
 		    <tr>
 		        <td class="b_title">첨부파일</td>
 		        <td id="attach-td">
-					<a id="attach-a" th:text="${{ attachment.originName }}"></a>
+					<a id="attach-a" th:text="${attachment.originName}"></a>
 					<input type="text" id="attach-fileNo" class="hide" th:value="${attachment.fileNo}" >
 		        </td>		        
 		    </tr>

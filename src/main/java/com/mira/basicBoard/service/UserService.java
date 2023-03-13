@@ -33,11 +33,11 @@ public class UserService implements UserDetailsService{
 		User user = userMapper.getUserAccount(userId);
 		
 		if(user != null) {
-			
+			log.info(userId + "접속");
+		} else {
+			throw new UsernameNotFoundException("사용자 " + userId + "를 찾을 수 없습니다.");			
 		}
-		if(user == null) {
-			throw new UsernameNotFoundException("User " + userId + " not found");
-		}
+		
 		
 		return user;
 	}
