@@ -121,6 +121,7 @@ function deleteBtn_click(){
 }
 	
     
+    
 function limitText(inputElement, maxLength) {
 	if (inputElement.value.length > maxLength) {
 		alert(maxLength + "자 이상은 입력하실 수 없습니다.");
@@ -174,10 +175,9 @@ $(function(){
 })
 
 //파일업로드 크기! 핸들러 완성되면 주석해제
-/*$(function(){
+$(function(){
 	
 	$("#write_file_input").change(function(){
-		
 		let file = document.getElementById('write_file_input');
 		let fileSize = file.files[0].size; //바이트로 출력됨
 		if(fileSize>5242880){
@@ -185,5 +185,5 @@ $(function(){
 			$("#write_file_input").val("");
 		}
 	})	
-})*/
+})
 

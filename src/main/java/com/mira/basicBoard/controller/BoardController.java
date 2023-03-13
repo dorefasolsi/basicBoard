@@ -316,7 +316,6 @@ public class BoardController {
 	    String headerValue = String.format("attachment; filename*=UTF-8''%s", UriUtils.encode(attachment.getOriginName(), "UTF-8"));
 	    //	(수정버전)한글파일 다운로드x 깨지는 오류 ->  인코딩 설정
 	    headers.add(HttpHeaders.CONTENT_DISPOSITION, headerValue);
-//	    log.info("헤더정보" + headers.toString());
 	    
 	    
 //	    log.info("ResponseEntity의 contentType : " + MediaType.APPLICATION_OCTET_STREAM);
