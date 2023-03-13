@@ -139,7 +139,6 @@ public class BoardController {
 			boardService.increaseViewCount(boardNo);
 			
 			mv.addObject("detailBoard", detailBoard).addObject("attachment", attachment);
-	
 			
 			mv.setViewName("/board/detailPage");
 			return mv;

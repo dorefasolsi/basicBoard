@@ -129,6 +129,13 @@ function limitText(inputElement, maxLength) {
 }
 
 
+$(function(){
+	$("#attach-a").click(function(){
+		location.href = '/attachment/download/' + $("#attach-fileNo").val();
+	})
+})
+
+
 	
 /*update*/
 $(function(){
@@ -157,5 +164,26 @@ $(function(){
 })
 
 
+/*write*/
 
+$(function(){
+    $("#write_file_cancle_button").click(function(){
+    	$("#write_file_input").val("");
+    });
+    
+})
+
+//파일업로드 크기! 핸들러 완성되면 주석해제
+/*$(function(){
+	
+	$("#write_file_input").change(function(){
 		
+		let file = document.getElementById('write_file_input');
+		let fileSize = file.files[0].size; //바이트로 출력됨
+		if(fileSize>5242880){
+			alert("파일 용량이 너무큽니다! 5MB이하의 파일만 첨부할 수 있습니다.");
+			$("#write_file_input").val("");
+		}
+	})	
+})*/
+

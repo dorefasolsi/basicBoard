@@ -23,7 +23,6 @@ public class FileUploadExceptionAdvice {
 		
 		log.info("업로드가 가능한 최대 파일 용량은 " + maxFileSize + "입니다.");
 		
-		log.info("288" + 288 / 4);
 		mv.setViewName("error/maxFileSize");
 		return  mv;
 		
