@@ -27,7 +27,13 @@
 	<!-- 게시글 전체 조회 -->
 	<select id="boardList" resultMap="BoardResultSet">
 
- 		select		* 
+ 		select		BOARDNO
+ 					, BOARDTITLE
+ 					, BOARDCONTENT
+ 					, CREATEDATE
+ 					, USERID
+ 					, VIEWCOUNT
+ 					, ATTACHMENT 
 		from 		BOARD
 		where		STATUS = 'Y'
 		<if test="category == 'boardTitle'">
@@ -103,7 +109,13 @@
 	
 	
 	<select id="detailBoard" resultMap="BoardResultSet" parameterType="int">
-		select 	*
+		select 	BOARDNO
+				, BOARDTITLE
+				, BOARDCONTENT
+				, CREATEDATE
+				, USERID
+				, VIEWCOUNT
+				, ATTACHMENT 
 		from 	BOARD
 		where 	BOARDNO = #{boardNo}
 		and		STATUS = 'Y';
@@ -163,7 +175,16 @@
 
 
 	<select id="getAttachment" parameterType="int" resultMap="AttachmentResultSet">
-		select * from attachment where fileNo = #{fileNo}
+		select FILENO
+				, STOREDNAME
+				, ORIGINNAME
+				, PATH
+				, UPLOADDATE
+				, STATUS
+				, BOARDNO
+				, USERID 
+		from ATTACHMENT 
+		where FILENO = #{fileNo}
 	</select>
 
 

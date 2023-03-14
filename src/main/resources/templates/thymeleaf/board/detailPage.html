@@ -33,7 +33,7 @@
 	<div class="container" id="b_container">
 		<h2>글 읽기</h2>
 		<p></p>
-		<table class="table" th:object="${detailBoard}">
+		<table class="table" th:object="${board}">
 			<tr>
 				<td class="b_title">제목</td>
 				<td><input type="text" class="b_context" th:field="*{boardTitle}" readonly></td>
@@ -64,15 +64,15 @@
 		</table>
 		
 		<div class="d-flex justify-content-center mb-3">  
-			<th:block th:if="${#authentication.name.equals(detailBoard.userId)}">
-			    <form th:action="@{'/board/update/'+${detailBoard.boardNo}}" th:method="get">
+			<th:block th:if="${#authentication.name.equals(board.userId)}">
+			    <form th:action="@{'/board/update/'+${board.boardNo}}" th:method="get">
 			        <div class="p-2"><button id="left_btn" type="submit">수정하기</button></div>
 			    </form>
-			    <form id="deleteForm" th:action="@{'/board/'+${detailBoard.boardNo}+'/delete'}" th:method="put">
+			    <form id="deleteForm" th:action="@{'/board/'+${board.boardNo}+'/delete'}" th:method="put">
 			        <div class="p-2"><button id="right_btn" type="button" onclick="deleteBtn_click()">삭제하기</button></div>
 			    </form>
 			</th:block>
-			<th:block th:unless="${#authentication.name.equals(detailBoard.userId)}">
+			<th:block th:unless="${#authentication.name.equals(board.userId)}">
 				<div class="d-flex justify-content-center mb-3">
 					<div class="p-2">
 						<button type="reset">

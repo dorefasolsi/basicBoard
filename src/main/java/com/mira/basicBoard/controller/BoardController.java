@@ -125,16 +125,16 @@ public class BoardController {
 	@GetMapping("/board/{boardNo}")
 	public ModelAndView detailBoard(@PathVariable("boardNo") int boardNo, ModelAndView mv) {
 		
-		Board detailBoard = boardService.detailBoard(boardNo);
+		Board board = boardService.detailBoard(boardNo);
 		boardService.increaseViewCount(boardNo);				
-		mv.addObject("detailBoard", detailBoard);
+		mv.addObject("board", board);
 		
-		if(detailBoard != null) {			
+		if(board != null) {			
 			Attachment attachment = new Attachment();
 			mv.setViewName("/board/detailPage");
 			
 //			기존코드
-//			if("Y".equals(detailBoard.getAttachment())) {			
+//			if("Y".equals(board.getAttachment())) {			
 //				attachment = boardService.selectAttachment(boardNo);
 //			}
 //			mv.addObject("attachment", attachment);
@@ -146,7 +146,7 @@ public class BoardController {
 			// attachment가 Y일 때 boardNo를 이용해서 조회해와야한다
 			// attachment가 Y가 아닐 때는...? 
 //			시도2. 중복코드 위로 빼기 + 요다조건문
-			if(!"Y".equals(detailBoard.getAttachment())) {
+			if(!"Y".equals(board.getAttachment())) {
 				mv.addObject("attachment", attachment);
 				return mv;
 			} else {
@@ -179,15 +179,15 @@ public class BoardController {
 	@GetMapping("/board/update/{boardNo}")
 	public ModelAndView updateBoardView(@PathVariable("boardNo") int boardNo, ModelAndView mv) {
 	
-		Board detailBoard = boardService.detailBoard(boardNo);
+		Board board = boardService.detailBoard(boardNo);
 		
 //		log.debug("detailBoard" + detailBoard);
 		
-		if(detailBoard.getAttachment() != null && "Y".equals(detailBoard.getAttachment())) {
+		if(board.getAttachment() != null && "Y".equals(board.getAttachment())) {
 			Attachment attachment = boardService.selectAttachment(boardNo);
 			mv.addObject("attachment", attachment);
 		}
-		mv.addObject("detailBoard", detailBoard);
+		mv.addObject("board", board);
 		mv.setViewName("/board/updatePage");
 		return mv;
 	}

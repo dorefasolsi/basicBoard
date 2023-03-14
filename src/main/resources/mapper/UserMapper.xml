@@ -8,7 +8,11 @@
 
 
 	<select id="getUserAccount" resultType="com.mira.basicBoard.vo.User" parameterType="String">
-		select * 
+		select USERID
+				, USERPWD
+				, USERNAME
+				, ROLE
+				, LASTLOGIN 
 			from USER
 			where USERID = #{userId}	
 	</select>
