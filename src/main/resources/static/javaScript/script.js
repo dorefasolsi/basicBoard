@@ -172,7 +172,6 @@ $(function(){
 function limitText(inputElement, maxLength) {
 	let letters = inputElement.value.length;
 	$("#lettersCheck").val(letters + "/3000자");
-	inpute
 	if (letters > maxLength) {
 		alert(maxLength + "자 이상은 입력하실 수 없습니다.");
 		inputElement.value = inputElement.value.substring(0, maxLength);
