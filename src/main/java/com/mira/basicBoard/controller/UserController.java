@@ -65,14 +65,8 @@ public class UserController {
 	@PostMapping("/enroll/validate")
     public ResponseDto<Integer> validateUserId(@RequestParam("userId") String userId) {
 		int result = userService.enrollValidate(userId);
-		if(result == 0) {
-//			log.info("동일 아이디 없음 결과 0 출력");
 			return new ResponseDto<Integer>(HttpStatus.OK, result);
-		}else {
-//			log.info("동일한 아이디가 있음 결과 1 출력");
-			return new ResponseDto<Integer>(HttpStatus.OK, result);
-		}
     }
-
+	
 	
 }

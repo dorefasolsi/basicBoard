@@ -31,15 +31,31 @@ public class UserService implements UserDetailsService{
 	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
 		
 		User user = userMapper.getUserAccount(userId);
+
+//		코드의 문제점 
+//		요구사항이 변경되어서 인자가 추가될경우 생기면 -> 코드변경해야하고, 변경 상황에 맞춰 정확하게 걸리는 조건식을 작성해야함
+//		return이 if문 밖에 빠져있어서 실행되지 못하고 던져지는 경우 발생할 가능성		
+		//기존코드
+//		if(user == null) {			
+//			throw new UsernameNotFoundException("사용자 " + userId + "를 찾을 수 없습니다.");			
+//		}
+//		return user;
 		
+		//수정1
 		if(user != null) {
 			log.info(userId + "접속");
+			return user;
 		} else {
-			throw new UsernameNotFoundException("사용자 " + userId + "를 찾을 수 없습니다.");			
+			throw new UsernameNotFoundException("사용자 " + userId + "를 찾을 수 없습니다.");									
 		}
 		
+		//수정2 The operator ! is undefined for the argument type(s) User 오류 발생
+		//! => Boolean에서만 적용, User타입이라 에러 발생
+//		if(!user) {
+//			throw new UsernameNotFoundException("사용자 " + userId + "를 찾을 수 없습니다.");						
+//		}
 		
-		return user;
+		
 	}
 	
 	//사용자 정보 등록

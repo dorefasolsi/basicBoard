@@ -63,7 +63,7 @@ public class BoardController {
 	    
 	    ArrayList<Board> boards = boardService.boardList(pi, category, keyword);
 	     
-	    if(category!=null && !category.equals("") && keyword!=null) {
+	    if(category!=null && keyword!=null && !"".equals(category)) {
 	    	mv.addObject("category", category).addObject("keyword", keyword);
 	    }
 	    
@@ -126,19 +126,36 @@ public class BoardController {
 	public ModelAndView detailBoard(@PathVariable("boardNo") int boardNo, ModelAndView mv) {
 		
 		Board detailBoard = boardService.detailBoard(boardNo);
+		boardService.increaseViewCount(boardNo);				
+		mv.addObject("detailBoard", detailBoard);
 		
 		if(detailBoard != null) {			
 			Attachment attachment = new Attachment();
-			
-			if(detailBoard.getAttachment().equals("Y")) {			
-				attachment = boardService.selectAttachment(boardNo);
-			}
-			boardService.increaseViewCount(boardNo);
-			
-			mv.addObject("detailBoard", detailBoard).addObject("attachment", attachment);
-			
 			mv.setViewName("/board/detailPage");
-			return mv;
+			
+//			기존코드
+//			if("Y".equals(detailBoard.getAttachment())) {			
+//				attachment = boardService.selectAttachment(boardNo);
+//			}
+//			mv.addObject("attachment", attachment);
+//			return mv;
+
+			
+			
+			//!로 시작하는 코드로 변경하는게 좋은가!
+			// attachment가 Y일 때 boardNo를 이용해서 조회해와야한다
+			// attachment가 Y가 아닐 때는...? 
+//			시도2. 중복코드 위로 빼기 + 요다조건문
+			if(!"Y".equals(detailBoard.getAttachment())) {
+				mv.addObject("attachment", attachment);
+				return mv;
+			} else {
+				attachment = boardService.selectAttachment(boardNo);
+				mv.addObject("attachment", attachment);
+				return mv;				
+			}
+
+		
 		} else {
 			mv.setViewName("/error/notFoundPage");
 			return mv; 
@@ -165,7 +182,8 @@ public class BoardController {
 		Board detailBoard = boardService.detailBoard(boardNo);
 		
 //		log.debug("detailBoard" + detailBoard);
-		if(detailBoard.getAttachment().equals("Y") && detailBoard.getAttachment() != null) {
+		
+		if(detailBoard.getAttachment() != null && "Y".equals(detailBoard.getAttachment())) {
 			Attachment attachment = boardService.selectAttachment(boardNo);
 			mv.addObject("attachment", attachment);
 		}
@@ -185,12 +203,12 @@ public class BoardController {
 		String attachYN = boardMapper.detailBoard(board.getBoardNo()).getAttachment();
 				
 		
-		if(file != null &&!file.isEmpty()) {
+		if(file != null && !file.isEmpty()) {
 			log.info("새로 입력된 파일이 있습니다");
 			board.setAttachment("Y");
             Attachment attachment = saveFile(file, board);
             int result = boardService.insertAttachment(attachment);
-		} else if(attachYN.equals("Y")){		
+		} else if("Y".equals(attachYN)){		
 			log.info("기존 파일이 있습니다.");
 			board.setAttachment("Y");
 		} else {
