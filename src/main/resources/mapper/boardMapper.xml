@@ -173,7 +173,6 @@
 	</update>
 	
 
-
 	<select id="getAttachment" parameterType="int" resultMap="AttachmentResultSet">
 		select FILENO
 				, STOREDNAME
