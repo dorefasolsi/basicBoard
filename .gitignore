@@ -34,7 +34,7 @@ build/
 
 
 
-### npy ###
+### Test File ###
 *.npy
 *.jpg
 *.zip

@@ -1,12 +1,10 @@
 package com.mira.basicBoard.controller;
 
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 
 import org.springframework.core.io.Resource;
@@ -15,6 +13,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +21,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -41,7 +39,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@RestController
+@Controller
 @RequiredArgsConstructor
 public class BoardController {
 	
@@ -228,15 +226,12 @@ public class BoardController {
 	@PostMapping("/attachment/delete")
 	public ResponseDto<Integer> deleteAttachment(Attachment attachment) {
 		//딜리트 ? 삭제 ?
-				
 		int result = boardMapper.deleteAttachmentFileNo(attachment);
-		
 		if(result != 0) {
 			return new ResponseDto<Integer>(HttpStatus.OK, result); // 200, 성공적인 요청
 		} else {
 			return new ResponseDto<Integer>(HttpStatus.INTERNAL_SERVER_ERROR, result); //500 서버에서 예기치 않은 오류 
 		}
-	
 	}
 	
 	

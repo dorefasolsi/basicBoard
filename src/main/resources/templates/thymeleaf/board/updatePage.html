@@ -34,7 +34,7 @@
 	                    <td class="b_title">제목</td>
 	                    <td>
 	                        <input type="text" class="write_input" name="boardTitle" th:value="*{boardTitle}" 
-	                        maxlength="100" oninput="limitText(this, 100)">
+	                        maxlength="100" oninput="limitText(this, 100)" onclick="byteCheck(this)">
 	                    </td>
 	                </tr>
 	                <tr>
@@ -42,7 +42,8 @@
 	                    <td>
 	                        <textarea class="write_input" name="boardContent" id="boardContent" 
 	                        cols="30" rows="10" th:text="*{boardContent}" 
-	                        maxlength="3000" oninput="limitText(this, 3000)"></textarea>
+	                        maxlength="3000" oninput="limitText(this, 3000)" onclick="byteCheck(this)"></textarea>
+	                        <input type="text" id="lettersCheck">
 	                    </td>
 	                </tr>
 				    <tr>

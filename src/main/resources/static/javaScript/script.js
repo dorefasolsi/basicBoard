@@ -169,19 +169,55 @@ $(function(){
     
 })
 
-function limitText(inputElement, maxLength) {
-	let letters = inputElement.value.length;
-	$("#lettersCheck").val(letters + "/3000자");
-	if (letters > maxLength) {
-		alert(maxLength + "자 이상은 입력하실 수 없습니다.");
-		inputElement.value = inputElement.value.substring(0, maxLength);
+/*http://trsketch.dothome.co.kr/page_rVsN24 코드 참고*/
+function charByteSize(lettersChar){
+	if(lettersChar <= 0x00007F){ 
+		return 1;
+	} else if(lettersChar <= 0x0077FF){ // 유니코드 2바이트 -> utf-8 3바이트
+		return 3;
+	} else if(lettersChar <= 0x00FFFF){ // 유니코드 2바이트 -> utf-8 3바이트
+		return 3;
+	} else { //표정이모티콘들 웃는얼굴, 유니코드 U+1F601 ~ U+10FFFF -> utf-8에서도 4바이트로 표시
+		return 4;
 	}
+	
+}
 
+
+function limitText(inputElement, maxLength) {
+    let lettersValue = inputElement.value; //입력한 문자
+    let lettersLength = inputElement.value.length; //문자수
+    let size = 0;
+
+    for(let i = 0; i < lettersLength; i++){
+        const lettersChar = lettersValue.charCodeAt(i);
+        /*const lettersEscape = escape(lettersChar);   // ㅇ : %u3147 더이상 사용되지 않음!
+        const lettersUri = encodeURI(lettersChar);   //  ㅇ : %E3%85%87 -> url에서 사용
+        const lettersComponent = encodeURIComponent(lettersChar); //ㅇ : %E3%85%87 -> url에서 사용 */
+        size += charByteSize(lettersChar);
+        if (size > maxLength) {
+            inputElement.value = inputElement.value.substring(0, i);
+            size = maxLength;
+            alert(maxLength + "바이트까지만 입력이 가능합니다.");
+        }
+    }
+    $("#lettersCheck").val(size + "/" + maxLength + "byte");
+}
+
+function byteCheck(inputElement, maxLength) {
+    let lettersValue = inputElement.value;
+    let lettersLength = inputElement.value.length;
+    let size = 0;
+
+    for(let i = 0; i < lettersLength; i++){
+        const lettersChar = lettersValue.charCodeAt(i);
+        size += charByteSize(lettersChar);
+    }
+    $("#lettersCheck").val(size + "/" + maxLength + "byte");
 }
 
 
 $(function(){
-	
 	$("#write_file_input").change(function(){
 		let file = document.getElementById('write_file_input');
 		let fileSize = file.files[0].size; //바이트로 출력됨
