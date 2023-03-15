@@ -28,4 +28,22 @@ Spring Security의 bcryptpasswordencoder를 이용, 암호화된 비밀번호 �
 
 2. 로그인
 ![image](https://user-images.githubusercontent.com/85056691/225222947-8f7d841e-a362-4259-810f-b8a02554db76.png)
+Spring Security를 이용한 보안 로그인
+
+
+3. 메인페이지
+![image](https://user-images.githubusercontent.com/85056691/225223115-2d63f3c6-5a2a-4fee-9080-e4d8f0984de6.png)
+페이징처리
+- 한 페이지에 게시글 10개
+- 페이징바에서 페이지 10개
+- 제목, 작성자 검색
+
+4. 글쓰기 페이지
+![image](https://user-images.githubusercontent.com/85056691/225223697-523eff5b-69f8-485e-818b-34f8bef2758c.png)
+제목, 내용 작성 시 byte수 표시
+입력 크기 제한
+단일첨부파일
+
+
+
 
