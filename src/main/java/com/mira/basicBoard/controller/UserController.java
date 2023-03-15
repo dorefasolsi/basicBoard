@@ -25,6 +25,7 @@ public class UserController {
 	private final UserService userService;
 
 	
+	// 로그인페이지로 이동
 	@GetMapping("/login/page")
 	public ModelAndView loginPage(@ModelAttribute("msg") String msg) {
 		ModelAndView mv = new ModelAndView();
@@ -33,18 +34,23 @@ public class UserController {
 		return mv;
 	}
 	
+	// 로그인 실패 페이지로 이동
 	@GetMapping("/login/fail")
 	public ModelAndView loginFailView(ModelAndView mv, User user) {
 		mv.setViewName("/user/loginFail");
 		return mv;
 	}
 
+	
+	//회원가입 페이지로 이동
 	@GetMapping("/enroll/page")
 	public ModelAndView enrollPageView(ModelAndView mv) {
 		mv.setViewName("/user/enrollPage");
 		return mv;
 	}
 
+	
+	//회원가입
 	@PostMapping("/enroll/enroll")
 	public ModelAndView enrollProcess(ModelAndView mv, User user, RedirectAttributes redirectAttributes) {
 		int result = userService.enrollProcess(user);
@@ -62,6 +68,8 @@ public class UserController {
 		return mv;
 	}
 	
+	
+	// 아이디 중복 검사
 	@PostMapping("/enroll/validate")
     public ResponseDto<Integer> validateUserId(@RequestParam("userId") String userId) {
 		int result = userService.enrollValidate(userId);

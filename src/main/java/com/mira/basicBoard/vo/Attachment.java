@@ -22,6 +22,5 @@ public class Attachment {
 	private String status;		//삭제여부
 	private int boardNo;		//글번호
 	private String userId;		//작성자
-	private String attachment;
 	
 }

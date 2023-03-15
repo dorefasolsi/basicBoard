@@ -55,18 +55,24 @@ public class BoardController {
 	    
 		ModelAndView mv = new ModelAndView();
 		
+		//총 게시글 수 조회(검색조건 있는 경우 해당하는 게시글 수만 조회)
 		int listCount = boardService.countBoardList(category, keyword); 
 	    
+		//페이징처리 총게시글수, 현재페이지, 한패이지내최대갯수, 페이징바에서보여줄페이지수
 	    PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
 	    
+	    //BOARD테이블에 있고 조건이 일치하는 모든 컬럼 조회
 	    ArrayList<Board> boards = boardService.boardList(pi, category, keyword);
 	     
+	    //검색 시 검색창에서 카테고리와 키워드가 유지될 수 있도록 넘겨줌
 	    if(category!=null && keyword!=null && !"".equals(category)) {
 	    	mv.addObject("category", category).addObject("keyword", keyword);
 	    }
 	    
-	    
+	    //게시글 정보와 페이징처리 넘겨줌
 	    mv.addObject("boards", boards).addObject("pi", pi);
+	    
+	    //이동할 페이지
 	    mv.setViewName("/board/listPage");
 	    
 	    return mv;
@@ -83,30 +89,42 @@ public class BoardController {
 	
 	// 게시글 작성
 	@Transactional
-	@PostMapping("/board/write")
+	@PostMapping("/board/write")	//스프링시큐리티 - 현재 인증된 사용자의 User(Principal) 객체 가져옴
 	public ModelAndView writeBoard(@AuthenticationPrincipal User user, 
 									@RequestParam(value="file") MultipartFile file,
 									Board board, RedirectAttributes redirectAttributes) throws IOException {
 	    
+		//board의 작성자에 현재 로그인되어있는 사용자의 아이디 넣어줌
 		board.setUserId(user.getUserId());
 		int result = 0;
+		String msg = "";
+	    
 
+		//넘어온 파일이 있을 경우 board의 첨부파일 상태를 "Y"로 변경함
 		if(!file.isEmpty()) {
 			board.setAttachment("Y");
+			
+			//board객체 DB에 등록
 			result = boardService.writeBoard(board);
 
+			//가장 최근에 등록된 boardNo 가져옴
 			int boardNo = boardMapper.selectLastInsertId();
+			
+			//board의 boardNo에 가장 최근에 등록된 boardNo 삽입
 			board.setBoardNo(boardNo);
+			
+			//saveFile메소드 - 첨부파일명 변경 및 파일 저장하는 메소드
 			Attachment attachment = saveFile(file, board);
 			
+			//변환한 첨부파일 정보를 db에 등록
 			int attachmentResult = boardService.insertAttachment(attachment);
 			
 		} else {
+			
+		//넘어온 첨부파일이 없는 경우 게시글 등록만
 			result = boardService.writeBoard(board);
 		}
 		
-	    String msg = "";
-	    
 	    if(result != 0) {
 	        msg = "게시글이 등록되었습니다.";
 
@@ -114,6 +132,7 @@ public class BoardController {
 //	        log.info("결과는 " + Integer.toString(result) + " , 실패!");
 	        msg = "error";
 	    }
+	    
 	    redirectAttributes.addFlashAttribute("msg", msg);
 	    return new ModelAndView("redirect:/board/list");
 	}
@@ -123,38 +142,31 @@ public class BoardController {
 	@GetMapping("/board/{boardNo}")
 	public ModelAndView detailBoard(@PathVariable("boardNo") int boardNo, ModelAndView mv) {
 		
+		//boardNo를 이용하여 게시글 조회
 		Board board = boardService.detailBoard(boardNo);
-		boardService.increaseViewCount(boardNo);				
-		mv.addObject("board", board);
-		
-		if(board != null) {			
-			Attachment attachment = new Attachment();
-			mv.setViewName("/board/detailPage");
-			
-//			기존코드
-//			if("Y".equals(board.getAttachment())) {			
-//				attachment = boardService.selectAttachment(boardNo);
-//			}
-//			mv.addObject("attachment", attachment);
-//			return mv;
 
+		
+		//게시글 정보가 있을 때
+		if(board != null) {
 			
+			Attachment attachment = new Attachment();
 			
-			//!로 시작하는 코드로 변경하는게 좋은가!
-			// attachment가 Y일 때 boardNo를 이용해서 조회해와야한다
-			// attachment가 Y가 아닐 때는...? 
-//			시도2. 중복코드 위로 빼기 + 요다조건문
-			if(!"Y".equals(board.getAttachment())) {
-				mv.addObject("attachment", attachment);
-				return mv;
-			} else {
+			//게시글의 첨부파일이 있을 때
+			if("Y".equals(board.getAttachment())) {
+				//첨부파일 조회
 				attachment = boardService.selectAttachment(boardNo);
-				mv.addObject("attachment", attachment);
-				return mv;				
 			}
+			
+			//게시글과 첨부파일 넘기기
+			mv.addObject("attachment", attachment).addObject("board", board);
+			boardService.increaseViewCount(boardNo);	
+			mv.setViewName("/board/detailPage");
+			return mv;
+
 
 		
 		} else {
+		// 게시글 정보가 없을 때 에러 페이지로 이동
 			mv.setViewName("/error/notFoundPage");
 			return mv; 
 		}
@@ -177,14 +189,17 @@ public class BoardController {
 	@GetMapping("/board/update/{boardNo}")
 	public ModelAndView updateBoardView(@PathVariable("boardNo") int boardNo, ModelAndView mv) {
 	
+		//수정할 게시글 내용 조회
 		Board board = boardService.detailBoard(boardNo);
 		
-//		log.debug("detailBoard" + detailBoard);
 		
+		//해당 게시글에 첨부파일이 있을 경우 조회하여 넘기기
 		if(board.getAttachment() != null && "Y".equals(board.getAttachment())) {
 			Attachment attachment = boardService.selectAttachment(boardNo);
 			mv.addObject("attachment", attachment);
 		}
+		
+		//게시글 내용이 화면단에 보여질 수 있도록 보냄
 		mv.addObject("board", board);
 		mv.setViewName("/board/updatePage");
 		return mv;
@@ -198,21 +213,34 @@ public class BoardController {
 									Board board, 
 									RedirectAttributes redirectAttributes) throws IOException {
 		
+		//해당 게시글에 기존 첨부파일이 있었는지 조회
 		String attachYN = boardMapper.detailBoard(board.getBoardNo()).getAttachment();
 				
-		
+		//전달받은 첨부파일이 있는 경우
 		if(file != null && !file.isEmpty()) {
 			log.info("새로 입력된 파일이 있습니다");
+			
+			//게시글에 첨부파일이 있음을 알림
 			board.setAttachment("Y");
+			
+			//saveFile() -> 파일명 변경, 파일 저장 관련 메소드
             Attachment attachment = saveFile(file, board);
+            
+            //첨부파일 정보 DB 등록
             int result = boardService.insertAttachment(attachment);
+       
+        //기존 첨부파일이 있는 경우, 전달받은 첨부파일 관련 처리X 
 		} else if("Y".equals(attachYN)){		
 			log.info("기존 파일이 있습니다.");
+			
+			//게시글 첨부파일이 있음을 알림
 			board.setAttachment("Y");
 		} else {
+			//전달받은 첨부파일 없음
 			log.info("입력된 파일이 없습니다");
 			board.setAttachment("N");				
 		}
+		
 		
 		int result = boardService.updateBoard(board);
 		String msg = "게시글 수정이 완료되었습니다.";
@@ -222,11 +250,17 @@ public class BoardController {
 	}
 	
 	
+	
 	//첨부파일 삭제
 	@PostMapping("/attachment/delete")
 	public ResponseDto<Integer> deleteAttachment(Attachment attachment) {
-		//딜리트 ? 삭제 ?
+		//ajax 이용하여 넘어왔음
+		
+		
+//		attachment 상태 N으로 변경
 		int result = boardMapper.deleteAttachmentFileNo(attachment);
+		
+		// 결과값 돌려주기 위함
 		if(result != 0) {
 			return new ResponseDto<Integer>(HttpStatus.OK, result); // 200, 성공적인 요청
 		} else {

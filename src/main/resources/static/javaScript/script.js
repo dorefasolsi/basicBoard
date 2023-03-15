@@ -63,6 +63,7 @@ $(function(){
 	      
 		if(!regExp.test($enrollUserPwd)){
 			$('#pwd-feedback').val("올바르지 않은 비밀번호 형식입니다. 8~16자의 영어 대소문자, 숫자, 특수문자(!@#$%)만 사용하실 수 있습니다.");
+			$('#enrollUserPwd').val("");
 			return false;
 		}
 		else if(regExp.test($enrollUserPwd)){
@@ -78,7 +79,8 @@ $(function(){
 		let $enorllUserPwdCheck = $('#enorllUserPwdCheck').val();
 		
 		if($enrollUserPwd != $enorllUserPwdCheck){
-			$('#pwd-check-feedback').val("틀림~");
+			$('#pwd-check-feedback').val("비밀번호가 일치하지 않습니다.");
+			$('#enorllUserPwdCheck').val("");
 		}
 		      
 		else if($enrollUserPwd == $enorllUserPwdCheck){

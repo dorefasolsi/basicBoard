@@ -47,6 +47,7 @@
 
 	</select>
 	
+	<!-- 총 게시글 수 조회 -->
 	<select id="countBoardList" resultType="int"> 
 	
 		select	COUNT(*)
@@ -62,6 +63,7 @@
 	
 	</select>
 	
+	<!-- 게시글 작성 -->
 	<insert id="writeBoard" parameterType="board">
 	
 		insert into BOARD(
@@ -83,10 +85,12 @@
 						);	
 	</insert>
 	
+	<!-- 가장 최근에 작성된 boardNo 가지고오기 -->
 	<select id="selectLastInsertId" resultType="int">
 		select LAST_INSERT_ID();
 	</select>
 	
+	<!-- 첨부파일 등록 -->
 	<insert id="insertAttachment">
 		insert into ATTACHMENT(
 							ORIGINNAME
@@ -107,7 +111,7 @@
 	</insert>
 	
 	
-	
+	<!-- 게시글 상세조회 -->
 	<select id="detailBoard" resultMap="BoardResultSet" parameterType="int">
 		select 	BOARDNO
 				, BOARDTITLE
@@ -121,58 +125,23 @@
 		and		STATUS = 'Y';
 	</select>
 	
-	<select id="selectAttachment" resultMap="AttachmentResultSet">
-		select	*
+	<!-- 첨부파일 조회 / boardNo 이용 -->
+	<select id="selectAttachment" parameterType="int" resultMap="AttachmentResultSet">
+		select	FILENO
+				, ORIGINNAME
+				, STOREDNAME
+				, PATH
+				, UPLOADDATE
+				, STATUS
+				, BOARDNO
+				, USERID
+				, ATTACHMENT
 		from 	ATTACHMENT
 		where	BOARDNO = #{boardNo}
 		and 	STATUS = 'Y';
 	</select>
 	
-	<update id="increaseViewCount" parameterType="int">
-	
-		update	BOARD
-		set 	VIEWCOUNT = VIEWCOUNT + 1 
-		where	BOARDNO = #{boardNo};
-	
-	</update>
-	
-	
-	
-	<update id="deleteBoard" parameterType="int">
-		update	BOARD
-		set		STATUS = 'N' 
-		where	BOARDNO = #{boardNo};
-	</update>
-	
-	
-	<update id="deleteAttachment" parameterType="int">
-	    update	ATTACHMENT
-	    set 	STATUS = 'N'
-	    where	BOARDNO = #{boardNo}
-	    
-
-	</update>
-	
-	
-	<update id="deleteAttachmentFileNo" parameterType="com.mira.basicBoard.vo.Attachment">
-		update	BOARD, ATTACHMENT 
-	    set 	BOARD.ATTACHMENT = 'N'
-	    		, ATTACHMENT.STATUS ='N' 
-	    WHERE 	BOARD.BOARDNO = ATTACHMENT.BOARDNO 
-	    and 	BOARD.BOARDNO = #{boardNo} 
-	    and 	ATTACHMENT.FILENO = #{fileNo};
-	</update>
-	
-
-	<update id="updateBoard" parameterType="board">
-		update	BOARD
-		set		BOARDTITLE = #{boardTitle}
-				, BOARDCONTENT = #{boardContent}
-				, ATTACHMENT = #{attachment}
-		where 	BOARDNO = #{boardNo};
-	</update>
-	
-
+	<!-- 첨부파일 가져오기 / fileNo 이용-->
 	<select id="getAttachment" parameterType="int" resultMap="AttachmentResultSet">
 		select FILENO
 				, STOREDNAME
@@ -185,6 +154,50 @@
 		from ATTACHMENT 
 		where FILENO = #{fileNo}
 	</select>
+	
+	<!-- 조회수 증가 -->
+	<update id="increaseViewCount" parameterType="int">
+	
+		update	BOARD
+		set 	VIEWCOUNT = VIEWCOUNT + 1 
+		where	BOARDNO = #{boardNo};
+	
+	</update>
+	
+	<!-- 게시글 삭제 -->
+	<update id="deleteBoard" parameterType="int">
+		update	BOARD
+		set		STATUS = 'N' 
+		where	BOARDNO = #{boardNo};
+	</update>
+	
+	<!-- 첨부파일 삭제 -->
+	<update id="deleteAttachment" parameterType="int">
+	    update	ATTACHMENT
+	    set 	STATUS = 'N'
+	    where	BOARDNO = #{boardNo}
+	</update>
+	
+	<!-- 첨부파일 삭제(파일넘버 이용) -->
+	<update id="deleteAttachmentFileNo" parameterType="com.mira.basicBoard.vo.Attachment">
+		update	BOARD, ATTACHMENT 
+	    set 	BOARD.ATTACHMENT = 'N'
+	    		, ATTACHMENT.STATUS ='N' 
+	    WHERE 	BOARD.BOARDNO = ATTACHMENT.BOARDNO 
+	    and 	BOARD.BOARDNO = #{boardNo} 
+	    and 	ATTACHMENT.FILENO = #{fileNo};
+	</update>
+	
+	<!-- 게시글 수정 -->
+	<update id="updateBoard" parameterType="board">
+		update	BOARD
+		set		BOARDTITLE = #{boardTitle}
+				, BOARDCONTENT = #{boardContent}
+				, ATTACHMENT = #{attachment}
+		where 	BOARDNO = #{boardNo};
+	</update>
+	
+
 
 
 
