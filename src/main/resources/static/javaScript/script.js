@@ -86,7 +86,7 @@ $(function(){
 		else if($enrollUserPwd == $enorllUserPwdCheck){
 			$('#pwd-check-feedback').val("");
 		}
-	      
+	       
 	})
       
 	$('#enrollUserName').blur(function(){
